@@ -1,0 +1,375 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-09-18 18:30:00",
+  "containerVersion": {
+    "path": "accounts/100001/containers/200001/versions/0",
+    "accountId": "100001",
+    "containerId": "200001",
+    "containerVersionId": "0",
+    "name": "ResponseLock Conversion Integrity Demo",
+    "notes": "Exported container configuration for ResponseLock Week-1 Conversion-Integrity Demo Workspace.",
+    "container": {
+      "path": "accounts/100001/containers/200001",
+      "accountId": "100001",
+      "containerId": "200001",
+      "name": "ResponseLock Demo Container",
+      "publicId": "GTM-DEMO001",
+      "usageContext": [
+        "WEB"
+      ],
+      "fingerprint": "1726682400000",
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/100001/containers/200001/workspaces"
+    },
+    "tag": [
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "tagId": "1",
+        "name": "Google Tag - GA4 Configuration",
+        "type": "googtag",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "tagId",
+            "value": "{{const - ga4_measurement_id}}"
+          },
+          {
+            "type": "LIST",
+            "key": "configSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "debug_mode"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": [
+          "11"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "tagId": "2",
+        "name": "GA4 Event - demo_lead_success",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "measurementId",
+            "value": "{{const - ga4_measurement_id}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "demo_lead_success"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "submission_id"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - submission_id}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "form_id"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - form_id}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "lead_type"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - lead_type}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "scenario"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - scenario}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "attribution_status"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - attribution_status}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "debug_mode"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "true"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": [
+          "10"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "triggerId": "10",
+        "name": "CE - demo_lead_success",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "demo_lead_success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "triggerId": "11",
+        "name": "All Pages",
+        "type": "PAGEVIEW"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "1",
+        "name": "const - ga4_measurement_id",
+        "type": "c",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "value",
+            "value": "G-DEMO000001"
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "2",
+        "name": "dlv - submission_id",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "submission_id"
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "3",
+        "name": "dlv - form_id",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "form_id"
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "4",
+        "name": "dlv - lead_type",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "lead_type"
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "5",
+        "name": "dlv - scenario",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "scenario"
+          }
+        ]
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "variableId": "6",
+        "name": "dlv - attribution_status",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "attribution_status"
+          }
+        ]
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "type": "PAGE_URL",
+        "name": "Page URL"
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "type": "PAGE_PATH",
+        "name": "Page Path"
+      },
+      {
+        "accountId": "100001",
+        "containerId": "200001",
+        "type": "EVENT",
+        "name": "Event"
+      }
+    ],
+    "fingerprint": "1726682400000",
+    "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/100001/containers/200001/versions/0"
+  }
+}

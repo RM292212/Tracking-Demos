@@ -310,3 +310,140 @@ The generated `scripts/emit-matrix.mjs` produces `demo/test-results/verification
 ## Final Report
 
 Must include exactly: Completion Status; Workspace Location; Technology Used; Orchestration Summary; Folders and Files Created; Baseline Behavior; Six Defects Implemented; Production Realism Features; Automated Verification Results (quoting generated matrix); Manual GTM Steps; Manual GA4 Steps; Evidence to Capture; Commands to Run; Known Limitations; Git Branch and Commits; Push Status; and "My Exact Next Five Actions" (which are: 1. Add test GTM ID, 2. Configure GA4 event through GTM, 3. Run baseline in Tag Assistant and DebugView, 4. Reproduce and capture Defects 1-6, 5. Explain Defect 1 aloud without notes).
+
+## 2026-09-18T18:25:00Z
+
+# ResponseLock Week-1: CONTINUE FROM WAVE 1 (Wave 0 is complete)
+
+This is a CONTINUATION of an in-progress build. Wave 0 is fully committed and verified. You must pick up from Wave 1.
+
+## Current State
+
+**Working directory:** `C:\Users\Ranji\code-base\RL-Demo`
+**Branch:** `build/conversion-integrity-demo`
+**Commits landed:**
+1. `2f5ed9b` — feat(wave-0): scaffold, contracts, layout, store, and smoke test harness
+2. `109be3e` — fix(wave-0): resolve build trace, dynamic matrix emitter, uuid pii regex, and mutex deduplication
+
+**Git status:** Clean working tree, nothing uncommitted.
+
+**What Wave 0 completed (DO NOT REDO):**
+- Git repo initialized on branch `build/conversion-integrity-demo`
+- Next.js App Router project in `demo/` with strict TypeScript
+- All dependencies installed (Next.js, zod, vitest, Playwright, @axe-core/playwright, etc.)
+- Contract Pack frozen in `demo/src/lib/contracts/` (events.ts, crm.ts, attribution.ts, timeline.ts, routes.ts, schema.ts)
+- `docs/CONTRACTS.md` written
+- Root layout with `<GtmScript />`, consent defaults
+- `src/lib/env.ts` with zod validation
+- `src/lib/crm-store.ts` with JSONL storage + async mutex + in-mutex deduplication
+- `/api/leads` route with zod validation, idempotency, latency
+- `/api/leads/reset` dev-only endpoint
+- Stub pages for all scenario routes (baseline, defect-1 through defect-6)
+- `/crm`, `/evidence` route stubs
+- Index page
+- `not-found.tsx`
+- `GtmScript.tsx` component
+- `src/lib/mappers/` directory
+- `demo/scripts/emit-matrix.mjs` (dynamic test results parser)
+- `demo/scripts/scan-pii.mjs`
+- `demo/scripts/check-docs-commands.mjs`
+- vitest config, playwright config (IPv4 localhost binding)
+- All npm scripts (dev, build, start, lint, typecheck, test:unit, test:e2e, scan:pii, check:docs, emit:matrix, verify)
+- `.gitignore`, `.env.example`
+- Workspace folder structure (docs/, evidence/, gtm/, access/, audit-template/, scope/, proposals/, invoices/, business-tracker/)
+- 50+ unit/integration tests passing (adversarial concurrency, contract invariants)
+- Concurrency stress-tested (100 parallel writes, zero corruption)
+- Build passes, typecheck passes
+
+**What still needs to be built (Wave 1+):**
+
+### Wave 1 — Parallel Implementation
+- **A1-baseline-core**: Shared form component (with honeypot, aria-describedby errors, aria-live status, submit disable during flight), validation module, success panel, attribution capture/persistence module, `/scenario/baseline` full implementation, `/` index page update, unit and e2e tests
+- **A2-defects-1-2**: Defect 1 (click listener on submit button fires before validation), Defect 2 (legacy-conversion-listener.ts duplicate), pages and tests
+- **A3-defects-3-4**: Defect 3 (stale constants with misspelled event name), Defect 4 (separate payload mapper with renamed keys), pages and tests
+- **A4-defects-5-6**: Defect 5 (SPA navigation attribution loss - reads window.location.search instead of persisted storage), Defect 6 (server-side CrmFieldMap in mappers/defect-06.ts), pages and tests
+- **A5-observability-crm-ui**: Observability timeline panel component, Test Conditions panel, consent banner UI, `/crm` page, `/evidence` page, reset UX, tests
+- **A6-docs-operational**: demo-runbook.md, troubleshooting.md, demo-safety-rules.md, week-1-checklist.md, manual-verification-checklist.md, demo/README.md
+- **A7-docs-google**: gtm-setup.md, gtm-manual-steps.md, ga4-debugview-setup.md, google-ads-boundary.md, gtm/responselock-demo-container.json, gtm/IMPORT-NOTES.md
+- **A8-business-artifacts**: audit-template/**, scope/**, access/**, proposals/**, invoices/**, business-tracker/README.md
+- **A9-evidence-templates**: All evidence/**/finding.md files, evidence/README.md, docs/evidence-capture-guide.md, docs/defect-catalog.md, docs/client-explanation-scripts.md
+
+### Wave 2 — Adversarial Review (after Wave 1)
+- R1-determinism-red-team, R2-doc-accuracy, R3-beginner-simulator, R4-safety-audit
+
+### Wave 3 — Final fixes, full verify, STATUS.md, CHANGELOG.md, README.md update, final commits
+
+---
+
+## Full Specification (for reference)
+
+Working directory: `C:\Users\Ranji\code-base\RL-Demo`
+Integrity mode: demo
+
+### Environment
+- OS: Windows 11, PowerShell 5.1
+- Node: v24.18.0, npm 11.16.0
+- Git: 2.55.0
+- GTM Container ID: `GTM-KRH5W5MX` (non-production, in .env.local)
+- GA4 Measurement ID: `G-GQBPF316M0` (non-production, in .env.local)
+- Git: local-only commits, NO push
+- Realism: Full (Consent Mode v2, latency, ad-blocker, API-failure, SPA route-change)
+
+### Integrity Rules (BINDING)
+1. Libraries allowed per spec only. No extra deps without asking.
+2. Vendor snippets (GTM, consent mode) must match Google's official docs verbatim.
+3. Defect mechanisms: hand-authored real code paths, NOT flags/conditionals on scenario id.
+4. Implementation before tests. Never write test first.
+5. Tests assert behaviour (dataLayer contents, request counts, CRM rows, DOM state), not internals.
+6. No silent scope reduction. Report BLOCKED if stuck.
+7. Verification is not self-reported — orchestrator re-runs everything.
+
+### Safety Rules (BINDING)
+1. No production GTM/GA4/Ads/CRM connections
+2. No real Google Ads conversions
+3. Fictional data only (demo.user@example.com, +1-555-0100, Example Media Group)
+4. No PII in dataLayer/GA4 parameters
+5. CRM stays local, no network egress
+6. Never change $350 price or business scope
+7. No fabricated evidence or claims
+
+### The Six Defects (mechanisms, not flags)
+
+**Defect 1 — Conversion fires on invalid submission:** Genuine click listener on submit button, fires before/independent of validation. Result: validation fails, no API call, no CRM row, but one `demo_lead_success` event pushed.
+
+**Defect 2 — Duplicate conversion:** Legacy module `legacy-conversion-listener.ts` pushes on click, plus new post-success handler also pushes. Same submission_id in both. Idempotency keeps CRM at 1 row.
+
+**Defect 3 — Missing conversion:** Success handler imports from stale constants exporting `demo_lead_sucess` (typo = LEGACY_MISSPELLED_EVENT). Expected event name never pushed.
+
+**Defect 4 — Bad parameters:** Separate payload mapper reads renamed source keys. form_id resolves undefined (dropped), lead_type gets stale value 'contact'.
+
+**Defect 5 — Attribution loss:** Entry with UTMs+gclid, SPA navigation drops query string, scenario reads window.location.search at submit instead of persisted storage. CRM row has empty attribution.
+
+**Defect 6 — CRM mismapping:** Server-side CrmFieldMap in mappers/defect-06.ts drops utm_campaign, writes utm_source into lead_source_detail, leaves lead_source blank.
+
+### Approved analytics payload keys
+`event: 'demo_lead_success'`, `form_id: 'lead_audit_demo'`, `lead_type: 'agency_audit_inquiry'`, `scenario`, `submission_id`, `attribution_status`, `debug_mode: true`
+
+### Verification Matrix Target
+| Scenario | Success UI | CRM Rows | Events | Result |
+|---|---:|---:|---:|---|
+| Baseline valid | 1 | 1 | 1 | Correct |
+| Baseline invalid | 0 | 0 | 0 | Correct rejection |
+| Defect 1 | 0 | 0 | 1 | False conversion |
+| Defect 2 | 1 | 1 | 2 | Duplicate |
+| Defect 3 | 1 | 1 | 0 | Missing |
+| Defect 4 | 1 | 1 | 1 | Bad params |
+| Defect 5 | 1 | 1 | 1 | Attribution lost |
+| Defect 6 | 1 | 1 | 1 | CRM incomplete |
+
+### UI Requirements
+Real <form noValidate>, honeypot, aria-describedby errors, aria-live status, submit disables during flight (except Defect 2), success from server response. WCAG AA, keyboard operable, focus rings, 360px no scroll, 200% zoom, prefers-reduced-motion.
+
+### Documentation Required
+demo-runbook.md, troubleshooting.md (25+ scenarios), gtm-setup.md, gtm-manual-steps.md, ga4-debugview-setup.md, google-ads-boundary.md, defect-catalog.md, client-explanation-scripts.md, demo-safety-rules.md, week-1-checklist.md, manual-verification-checklist.md, evidence-capture-guide.md, architecture.md, environment.md, sample-audit-report.md, severity-definitions.md, confidence-definitions.md, audit-scope-source.md, access-and-authorization-checklist.md, proposal-template.md, invoice-fields-checklist.md, business-tracker/README.md, gtm/responselock-demo-container.json, gtm/IMPORT-NOTES.md
+
+### Staged Commits
+Commit after every wave. Branch: `build/conversion-integrity-demo`. No push.
+
+### Final Report
+Must include: Completion Status; Workspace Location; Technology Used; Orchestration Summary; Folders and Files Created; Baseline Behavior; Six Defects; Realism Features; Verification Results (from generated matrix); Manual GTM/GA4 Steps; Evidence to Capture; Commands; Known Limitations; Git Branch/Commits; Push Status; Next Five Actions (1. Add GTM ID, 2. Configure GA4 in GTM, 3. Tag Assistant + DebugView baseline, 4. Capture Defects 1-6, 5. Explain Defect 1 aloud).
