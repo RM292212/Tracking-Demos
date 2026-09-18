@@ -1,0 +1,79 @@
+# ==============================================================================
+# ResponseLock Conversion-Integrity Demo - Root .gitignore
+# Spec Reference: ORIGINAL_REQUEST.md §Safety Rules (Rule 9)
+# ==============================================================================
+
+# Dependencies
+node_modules/
+demo/node_modules/
+.pnp
+.pnp.js
+
+# Next.js Build Output
+.next/
+demo/.next/
+out/
+demo/out/
+build/
+dist/
+*.tsbuildinfo
+
+# Environment Variables & Secrets (Safety Rule 9)
+# Protect all local environment files; allow only checked-in example templates
+.env
+.env.*
+.env*.local
+!.env.example
+!demo/.env.example
+
+# Local Simulated CRM Storage (Safety Rule 9)
+# Ignore all generated CRM JSONL records; preserve directory structure via .gitkeep
+demo/data/*
+!demo/data/.gitkeep
+
+# Automated Test Results, Reports & Artifacts (Safety Rule 9)
+# Ignore all test execution outputs; preserve directory structure via .gitkeep
+demo/test-results/*
+!demo/test-results/.gitkeep
+test-results/
+playwright-report/
+blob-report/
+
+# Traces, Profiling & Debug Dumps
+*.trace
+*.trace.zip
+*.cpuprofile
+*.heapsnapshot
+
+# Test Screenshots & Video Recordings
+*.webm
+*.png
+*.jpg
+*.jpeg
+# Preserve evidence screenshot directories via .gitkeep
+evidence/**/screenshots/*
+!evidence/**/screenshots/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE & Editor Configuration
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Teamwork Agent Coordination Metadata (Runtime Only)
+.agents/

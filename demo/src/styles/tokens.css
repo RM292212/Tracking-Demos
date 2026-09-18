@@ -1,0 +1,145 @@
+/**
+ * ResponseLock Design System Tokens
+ * Location: demo/src/styles/tokens.css
+ *
+ * Provides WCAG AA compliant color palette, focus rings, type scale,
+ * spacing scale, and reduced motion accessibility overrides.
+ */
+
+:root {
+  /* ==========================================================================
+     1. Color Palette (WCAG AA Compliant >= 4.5:1 text, >= 3:1 UI components)
+     ========================================================================== */
+
+  /* Neutral Surface & Backgrounds */
+  --color-bg-canvas: #090d16;
+  --color-bg-surface: #111827;
+  --color-bg-surface-raised: #1f2937;
+  --color-bg-surface-hover: #374151;
+  --color-bg-subtle: #1e293b;
+
+  /* Text & Foreground */
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+  --color-text-inverse: #111827;
+
+  /* Borders & Dividers */
+  --color-border-subtle: #1f2937;
+  --color-border-default: #374151;
+  --color-border-strong: #4b5563;
+
+  /* Brand & Primary Interactive */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-contrast: #ffffff;
+
+  /* Accent / Secondary Interactive */
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+
+  /* Status: Success */
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: #10b981;
+  --color-success-text: #34d399;
+
+  /* Status: Error / Danger */
+  --color-error-bg: rgba(239, 68, 68, 0.14);
+  --color-error-border: #ef4444;
+  --color-error-text: #f87171;
+
+  /* Status: Warning */
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-warning-border: #f59e0b;
+  --color-warning-text: #fbbf24;
+
+  /* Status: Info */
+  --color-info-bg: rgba(59, 130, 246, 0.12);
+  --color-info-border: #3b82f6;
+  --color-info-text: #60a5fa;
+
+  /* ==========================================================================
+     2. Focus Ring Tokens (High contrast keyboard accessibility)
+     ========================================================================== */
+  --focus-ring-color: #60a5fa;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-offset-color: #090d16;
+  --focus-ring: 0 0 0 var(--focus-ring-offset) var(--focus-ring-offset-color),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+
+  /* ==========================================================================
+     3. Spacing Scale (4px baseline grid)
+     ========================================================================== */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+
+  /* ==========================================================================
+     4. Typography Scale
+     ========================================================================== */
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ==========================================================================
+     5. Border Radius & Shadows
+     ========================================================================== */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
+
+  /* ==========================================================================
+     6. Transitions & Animations
+     ========================================================================== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   7. Accessibility: Prefers Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

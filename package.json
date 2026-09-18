@@ -1,0 +1,23 @@
+{
+  "name": "responselock-demo-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ResponseLock Week-1: Conversion-Integrity Demo Workspace",
+  "workspaces": [
+    "demo"
+  ],
+  "scripts": {
+    "dev": "npm --prefix demo run dev",
+    "build": "npm --prefix demo run build",
+    "start": "npm --prefix demo run start",
+    "lint": "npm --prefix demo run lint",
+    "typecheck": "npm --prefix demo run typecheck",
+    "test": "npm --prefix demo run test",
+    "test:unit": "npm --prefix demo run test:unit",
+    "test:e2e": "npm --prefix demo run test:e2e",
+    "scan:pii": "npm --prefix demo run scan:pii",
+    "check:docs": "npm --prefix demo run check:docs",
+    "emit:matrix": "npm --prefix demo run emit:matrix",
+    "verify": "npm --prefix demo run verify"
+  }
+}
