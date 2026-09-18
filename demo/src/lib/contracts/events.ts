@@ -76,11 +76,20 @@ export interface BuildAnalyticsPayloadParams {
 }
 
 /**
+ * Canonical UUID format regex for identifier validation.
+ */
+export const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
  * PII detection patterns for assertion guard.
+ * PHONE_REGEX uses negative lookaround boundaries (?<![0-9a-zA-Z]) and (?![0-9a-zA-Z])
+ * to prevent false positives on hexadecimal substrings in UUIDs or alphanumeric identifiers
+ * while strictly matching 7-digit, 10-digit, and +1 international phone numbers.
  */
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const PHONE_REGEX =
-  /(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}|(?:\+?1[-.\s])?\d{3}[-.\s]\d{4}/;
+  /(?<![0-9a-zA-Z])(?:\+?1[-.\s])?(?:\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}|\d{3}[-.\s]\d{4})(?![0-9a-zA-Z])/;
 
 /**
  * Asserts that a record contains zero PII in its keys or values.
@@ -103,6 +112,11 @@ export function assertNoPiiInPayload(payload: Record<string, unknown>): void {
     }
 
     if (typeof value === 'string') {
+      // Validated UUID submission_id is a system identifier, not PII
+      if (key === 'submission_id' && UUID_REGEX.test(value)) {
+        continue;
+      }
+
       if (EMAIL_REGEX.test(value)) {
         throw new Error(
           `[PII VIOLATION] Email address pattern detected in analytics value for key "${key}".`

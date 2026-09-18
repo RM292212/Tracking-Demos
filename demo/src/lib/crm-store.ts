@@ -10,6 +10,14 @@ import type { CrmRecord } from './contracts/crm';
 export const DETERMINISTIC_LATENCY_MS = 420;
 
 /**
+ * Result of appending a CRM record under mutex.
+ */
+export interface AppendRecordResult {
+  record: CrmRecord;
+  duplicate: boolean;
+}
+
+/**
  * Lightweight in-memory Async Mutex providing FIFO mutual exclusion
  * for asynchronous file operations without third-party dependencies.
  */
@@ -100,13 +108,22 @@ export class CrmStore {
   }
 
   /**
-   * Appends a new CRM record as a JSONL row. Serialized via Async Mutex.
+   * Appends a new CRM record as a JSONL row with atomic deduplication.
+   * Serialized via Async Mutex.
+   * If a record with record.submission_id is already stored, returns
+   * { record: existingRecord, duplicate: true } without appending a new line.
    */
-  async appendRecord(record: CrmRecord): Promise<void> {
+  async appendRecord(record: CrmRecord): Promise<AppendRecordResult> {
     return this.mutex.runExclusive(async () => {
       await this.ensureStorageFile();
+      const existing = await this.readRecordsUnlocked();
+      const match = existing.find((r) => r.submission_id === record.submission_id);
+      if (match) {
+        return { record: match, duplicate: true };
+      }
       const line = JSON.stringify(record) + '\n';
       await fs.appendFile(this.filePath, line, 'utf8');
+      return { record, duplicate: false };
     });
   }
 

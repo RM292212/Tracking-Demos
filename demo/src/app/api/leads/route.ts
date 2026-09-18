@@ -128,17 +128,31 @@ export async function POST(request: Request) {
     intentionally_missing_fields: mapped.missing_fields,
   };
 
-  // 10. Persist to JSONL store under Async Mutex lock
-  await crmStore.appendRecord(newRecord);
+  // 10. Persist to JSONL store under Async Mutex lock with atomic deduplication
+  const appendResult = await crmStore.appendRecord(newRecord);
+
+  if (appendResult.duplicate) {
+    return NextResponse.json(
+      {
+        success: true,
+        submission_id: appendResult.record.submission_id,
+        status: 'confirmed',
+        created_at: appendResult.record.created_at,
+        scenario: appendResult.record.scenario,
+        duplicate: true,
+      },
+      { status: 200 }
+    );
+  }
 
   // 11. Return 201 Created
   return NextResponse.json(
     {
       success: true,
-      submission_id: newRecord.submission_id,
+      submission_id: appendResult.record.submission_id,
       status: 'confirmed',
-      created_at: newRecord.created_at,
-      scenario: newRecord.scenario,
+      created_at: appendResult.record.created_at,
+      scenario: appendResult.record.scenario,
     },
     { status: 201 }
   );
