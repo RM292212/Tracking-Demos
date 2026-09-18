@@ -83,7 +83,7 @@ export default function Defect4Page(): React.ReactElement {
               borderColor = 'var(--color-primary-500, #3b82f6)';
             } else if (isAds) {
               bg = 'var(--color-bg-surface)';
-              color = 'var(--color-text-muted, #6b7280)';
+              color = 'var(--color-text-muted, #9ca3af)';
               borderColor = 'var(--color-border-subtle, #1f2937)';
             }
 
@@ -237,7 +237,7 @@ export default function Defect4Page(): React.ReactElement {
                 border: '1px solid var(--color-border-subtle)',
               }}
             >
-              <strong style={{ color: 'var(--color-text-muted, #6b7280)', display: 'block', fontSize: 'var(--font-size-xs, 0.75rem)' }}>
+              <strong style={{ color: 'var(--color-text-muted, #9ca3af)', display: 'block', fontSize: 'var(--font-size-xs, 0.75rem)' }}>
                 4. Not tested in Google Ads
               </strong>
               <p style={{ fontSize: 'var(--font-size-xs, 0.75rem)', margin: '0.25rem 0 0 0', color: 'var(--color-text-secondary)' }}>

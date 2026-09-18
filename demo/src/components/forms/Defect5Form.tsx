@@ -829,6 +829,9 @@ export function Defect5Form({
               URL Search: <code>{entrySearch || '(empty)'}</code>
             </p>
             <pre
+              tabIndex={0}
+              role="region"
+              aria-label="Attribution state at entry"
               style={{
                 fontSize: 'var(--font-size-xs)',
                 fontFamily: 'var(--font-family-mono)',
@@ -891,6 +894,9 @@ export function Defect5Form({
               <code>{step === 2 ? afterNavSearch || '"" (stripped)' : '(not navigated yet)'}</code>
             </p>
             <pre
+              tabIndex={0}
+              role="region"
+              aria-label="Attribution state after navigation"
               style={{
                 fontSize: 'var(--font-size-xs)',
                 fontFamily: 'var(--font-family-mono)',
@@ -944,6 +950,9 @@ export function Defect5Form({
               </span>
             </div>
             <pre
+              tabIndex={0}
+              role="region"
+              aria-label="Submitted attribution payload"
               style={{
                 fontSize: 'var(--font-size-xs)',
                 fontFamily: 'var(--font-family-mono)',
@@ -1006,6 +1015,9 @@ export function Defect5Form({
               </span>
             </div>
             <pre
+              tabIndex={0}
+              role="region"
+              aria-label="CRM record attribution data"
               style={{
                 fontSize: 'var(--font-size-xs)',
                 fontFamily: 'var(--font-family-mono)',

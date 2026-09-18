@@ -10,7 +10,7 @@ test.describe('Scenario: Defect 3 (Missing Conversion Event)', () => {
 
     // Title and scenario badge
     await expect(page.locator('h1')).toContainText('Defect 3: Missing Conversion Event');
-    await expect(page.getByText('Missing Conversion')).toBeVisible();
+    await expect(page.getByText('Missing Conversion', { exact: true })).toBeVisible();
 
     // 4 Verification Layer Labels
     const labelsContainer = page.getByTestId('verification-layer-labels');
@@ -48,9 +48,11 @@ test.describe('Scenario: Defect 3 (Missing Conversion Event)', () => {
     // Invariant: zero API requests
     expect(apiCallCount).toBe(0);
 
-    // Invariant: zero dataLayer pushes
+    // Invariant: zero demo_lead_success events (consent default and gtm.js are expected)
     const dataLayer = await page.evaluate(() => {
-      return (window as unknown as { dataLayer?: unknown[] }).dataLayer || [];
+      return ((window as unknown as { dataLayer?: unknown[] }).dataLayer || []).filter(
+        (entry: unknown) => typeof entry === 'object' && entry !== null && 'event' in entry && String((entry as Record<string, unknown>).event).startsWith('demo_lead')
+      );
     });
     expect(dataLayer).toHaveLength(0);
   });
