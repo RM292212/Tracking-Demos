@@ -72,7 +72,7 @@ When a user submits a valid lead, both listeners fire within 500ms of each other
 
 #### Detection Signature
 1. **Console / dataLayer**: Exactly **2** `demo_lead_success` events pushed to `window.dataLayer` with identical `submission_id` UUIDs.
-2. **Tag Assistant**: Google Tag Assistant indicates that GA4 and Google Ads tags fired twice for a single submission.
+2. **Tag Assistant**: Google Tag Assistant indicates that the GA4 event tag (`GA4 Event - demo_lead_success`) fired twice for a single submission (Google Ads conversion actions are bounded as conceptual-only).
 3. **Network Tab**: Exactly **1** successful network request to `/api/leads`.
 4. **CRM Database**: Exactly **1** unique record stored in `demo/data/crm-records.jsonl`.
 

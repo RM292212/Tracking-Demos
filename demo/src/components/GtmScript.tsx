@@ -18,7 +18,7 @@
  * - Graceful fallback when GTM ID is absent or invalid.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Script from 'next/script';
 import { env } from '@/lib/env';
 

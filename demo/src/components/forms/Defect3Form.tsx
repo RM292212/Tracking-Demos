@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LEGACY_MISSPELLED_EVENT } from '@/lib/stale-constants';
 import { deriveAttributionStatus, AttributionState } from '@/lib/contracts/attribution';
+import { captureAttribution } from '@/lib/attribution';
 
 interface FormErrors {
   full_name?: string;
@@ -23,6 +24,10 @@ export function Defect3Form(): React.ReactElement {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedId, setSubmittedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   const validate = (): boolean => {
     const nextErrors: FormErrors = {};

@@ -32,6 +32,7 @@ npm run scan:pii
 # Check documentation command validity
 npm run check:docs
 
-# Full verification pipeline
+# Local automated verification pipeline (Layer 1: lint, typecheck, unit, build, e2e, scan, docs)
+# Note: GTM Preview, GA4 DebugView, and screenshots are verified manually. Google Ads was not tested.
 npm run verify
 ```

@@ -81,8 +81,8 @@ ResponseLock enforces a strict, automated Zero-PII (Personally Identifiable Info
 To avoid confusion between browser-level events and ad network ingestion, all evidence packages classify observations into four explicit verification tiers:
 
 1. **Confirmed locally**: Proven in the running application via DOM state, browser console `window.dataLayer` inspection, and local JSONL CRM records.
-2. **Requires GTM Preview**: Verified by connecting Google Tag Assistant to confirm custom event trigger matching and tag firing rules.
-3. **Requires GA4 DebugView**: Verified by observing real-time event ingestion and parameter extraction inside the Google Analytics 4 administrative DebugView console.
+2. **Requires GTM Preview**: Requires manual verification by connecting Google Tag Assistant to confirm custom event trigger matching and tag firing rules (Pending user verification).
+3. **Requires GA4 DebugView**: Requires manual verification by observing real-time event ingestion and parameter extraction inside the Google Analytics 4 administrative DebugView console (Pending user verification).
 4. **Not tested in Google Ads**: Acknowledged boundary. Google Ads conversion actions are conceptual in training workspaces to prevent test data from contaminating live Smart Bidding bidding signals or generating accidental billing activity.
 
 ---

@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-DEF-004`  
 **Title**: Conversion Parameter Schema Drift Causing Missing Form ID and Corrupted Lead Type  
-**Audit Status**: Confirmed Defect  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: Medium  
 **Affected Route**: `/scenario/defect-4`  
 **Target Component**: `Defect4Form.tsx` / payload mapper  
@@ -35,7 +35,7 @@ This issue commonly arises during website redesigns or frontend refactoring when
    `http://localhost:3000/scenario/defect-4?utm_source=google&utm_medium=cpc&utm_campaign=responselock_demo&gclid=DEMO-GCLID-004`
 3. Fill in valid synthetic inquiry details:
    - **Full Name**: `Pat Casey`
-   - **Work Email**: `pat.casey@domain.com`
+   - **Work Email**: `pat.casey@example.com`
    - **Company Name**: `Cascade Growth Partners`
    - **Monthly Ad Spend**: `$10,000 - $25,000`
    - **Primary Challenge**: `Analytics custom dimensions show (not set)`
@@ -94,7 +94,7 @@ The backend CRM received all form fields accurately:
   "submission_id": "9d81e3a4-84c1-4b72-b7e1-320c1f54d404",
   "scenario": "defect-4",
   "full_name": "Pat Casey",
-  "work_email": "pat.casey@domain.com",
+  "work_email": "pat.casey@example.com",
   "company_name": "Cascade Growth Partners",
   "monthly_ad_spend": "$10,000 - $25,000",
   "primary_challenge": "Analytics custom dimensions show (not set)",
@@ -118,9 +118,9 @@ The backend CRM received all form fields accurately:
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
 | **Confirmed locally** | **FAIL (Defect Proven)** | Form and CRM succeed, but dataLayer payload drops `form_id` and corrupts `lead_type`. |
-| **Requires GTM Preview** | **VULNERABLE** | GTM Event fires, but dataLayer variables `dlv - form_id` return `undefined`. |
-| **Requires GA4 DebugView** | **VULNERABLE** | GA4 event parameters show `form_id = (not set)` and `lead_type = contact`. |
-| **Not tested in Google Ads** | **BOUNDARY** | Value rules based on `lead_type` fail to trigger in Google Ads conversion settings. |
+| **Requires GTM Preview** | **PENDING (Vulnerable)** | Requires user verification in Tag Assistant: verify whether `dlv - form_id` resolves to undefined and `dlv - lead_type` returns 'contact'. |
+| **Requires GA4 DebugView** | **PENDING (Vulnerable)** | Requires user verification in GA4 DebugView: verify whether `form_id` displays as (not set) and `lead_type` displays as 'contact'. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). If value rules based on `lead_type` are configured in Google Ads, conversion values would be distorted. |
 
 ---
 

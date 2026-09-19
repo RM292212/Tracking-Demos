@@ -18,6 +18,8 @@ const ALLOWED_ID_FILES = new Set([
   'demo/src/lib/env.ts',
   'demo/src/lib/env.test.ts',
   'demo/scripts/scan-pii.mjs',
+  'STATUS.md',
+  'evidence/verification-status.md',
 ]);
 
 const IGNORED_DIRS = new Set([
@@ -35,7 +37,7 @@ const GTM_GA4_REGEX = /\b(GTM-[A-Z0-9]{7,}|G-[A-Z0-9]{8,})\b/g;
 const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
 const PHONE_REGEX = /\b(?:\+?1[-. ]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\b/g;
 
-const ALLOWED_EMAIL_DOMAINS = ['@example.com', '@example.org', '@example.net', '@domain.com'];
+const ALLOWED_EMAIL_DOMAINS = ['@example.com', '@example.org', '@example.net'];
 const ALLOWED_PHONE_PREFIXES = ['555-01', '55501', '+1-555-01'];
 
 let violationsCount = 0;

@@ -189,6 +189,8 @@ export function Defect2Form(): React.ReactElement {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+    // Guard against multi-click while submission is in-flight
+    if (isSubmitting) return;
     setServerError(null);
 
     // 1. Client-side form validation

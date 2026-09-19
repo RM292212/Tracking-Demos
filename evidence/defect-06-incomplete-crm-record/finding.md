@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-DEF-006`  
 **Title**: Server Webhook Field Mapping Corruption and Source Detail Inversion  
-**Audit Status**: Confirmed Defect  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: High  
 **Affected Route**: `/scenario/defect-6`  
 **Target Component**: `demo/src/lib/mappers/defect-06.ts` / server mapper  
@@ -146,9 +146,9 @@ The persisted database record reveals the server mapping corruption:
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
 | **Confirmed locally** | **FAIL (Defect Proven)** | Client and dataLayer pass; CRM record is corrupted with missing source/campaign. |
-| **Requires GTM Preview** | **DECEPTIVE PASS** | GTM Preview fires normally, masking the backend breakdown. |
-| **Requires GA4 DebugView** | **DECEPTIVE PASS** | GA4 records conversion event normally, masking the CRM corruption. |
-| **Not tested in Google Ads** | **BOUNDARY** | Conversion registers in ad platform, but CRM cannot verify or close the loop. |
+| **Requires GTM Preview** | **PENDING (Deceptive Pass)** | Requires user verification in Tag Assistant: GTM tag expected to fire normally, masking backend corruption. |
+| **Requires GA4 DebugView** | **PENDING (Deceptive Pass)** | Requires user verification in GA4 DebugView: event expected to record normally, masking CRM corruption. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). In a live deployment, frontend conversions could register, but CRM records would lack matching source fields for offline closed-loop validation. |
 
 ---
 

@@ -1,5 +1,8 @@
 # ResponseLock Lead & Conversion Integrity Audit Report
 
+> ⚠️ **DISCLAIMER: Controlled demonstration — not a client result.**  
+> This report is a synthetic reference model generated for training and demonstration purposes within the ResponseLock Conversion-Integrity workspace. All data, financial calculations, and company references represent simulated scenarios.
+
 **Client Organization**: Apex Horizon Technologies  
 **Primary Web Property**: `https://apexhorizon.example.com`  
 **Engagement Model**: Fixed-Fee Diagnostic Audit ($350.00 USD)  
@@ -23,7 +26,7 @@ Apex Horizon Technologies currently invests approximately **$28,000 per month** 
 While Apex Horizon's engineering team recently verified that web forms display success messages and write rows to the database, our audit revealed **six critical, silent tracking failures** operating beneath the visual layer.
 
 ### 1.2 Headline Findings Summary
-1. **Phantom Conversions on Form Validation Errors (Defect 1)**: A raw click listener bound to the submit button fires a conversion event even when client-side validation fails. Unqualified users and spam clicks are recorded as successful conversions, teaching Google Ads Smart Bidding algorithms to bid aggressively on invalid traffic.
+1. **Phantom Conversions on Form Validation Errors (Defect 1)**: A raw click listener bound to the submit button fires a conversion event even when client-side validation fails. Unqualified users and spam clicks are recorded as conversion events which, if imported into Google Ads as primary conversions, risk providing misleading optimization signals to automated bidding algorithms.
 2. **100% Conversion Over-Counting (Defect 2)**: A surviving legacy tracking script (`legacy-conversion-listener.ts`) and a newly deployed post-submission handler both fire conversion events for the exact same lead, artificially doubling reported conversion volume and halving perceived Cost-Per-Acquisition (CPA).
 3. **Silent Conversion Blackout (Defect 3)**: A typographical error in a shared constants module (`LEGACY_MISSPELLED_EVENT = 'demo_lead_sucess'`) prevents GTM triggers from firing on valid submissions, causing high-performing campaigns to appear completely dead in Google Ads.
 4. **Attribution Stripping Across Multi-Step Navigation (Defect 5)**: When visitors transition from step 1 to step 2 in the questionnaire, client-side routing drops URL query parameters (`utm_source`, `utm_campaign`, `gclid`). At submission, the form reads `window.location.search` rather than persisted storage, dumping **72% of paid ad leads into "Direct / None" in your CRM**.

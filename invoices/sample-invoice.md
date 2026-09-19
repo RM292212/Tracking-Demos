@@ -1,9 +1,12 @@
-# COMMERCIAL INVOICE
+# COMMERCIAL INVOICE — SAMPLE / NOT PAYABLE
+
+> ⚠️ **TRAINING SAMPLE DOCUMENT ONLY — NOT PAYABLE**  
+> This invoice is a synthetic training template illustrating commercial formatting for the ResponseLock $350 Fixed-Scope Audit. It does not represent an actual demand for payment.
 
 **Invoice Number**: `RL-INV-2026-0348`  
 **Invoice Date**: September 15, 2026  
 **Payment Due Date**: September 22, 2026 (Net 7 Days)  
-**Payment Status**: DUE UPON KICKOFF  
+**Payment Status**: SAMPLE DOCUMENT — DUE UPON KICKOFF (UPFRONT)  
 **Currency**: USD ($)  
 
 ---

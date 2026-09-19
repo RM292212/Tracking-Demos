@@ -362,8 +362,10 @@ async function run() {
   markdown += `\n`;
 
   if (verifiedCount === 8) {
-    markdown += `### Verification Status: ALL 8 SCENARIOS VERIFIED\n`;
-    markdown += `- All 8 canonical scenarios independently verified via Playwright E2E assertions.\n`;
+    markdown += `### Verification Status: LOCAL AUTOMATION VERIFIED (8/8 Scenarios Verified Locally)\n`;
+    markdown += `- All 8 canonical scenarios independently verified locally via automated Playwright E2E assertions.\n`;
+    markdown += `- GTM Preview, GA4 DebugView, screenshots, and final evidence records remain PENDING manual user verification.\n`;
+    markdown += `- Google Ads conversion tracking was NOT TESTED (conceptual boundary).\n`;
     markdown += `- Zero axe-core serious/critical violations on verified routes.\n`;
     markdown += `- Zero real PII leaked to dataLayer or server storage.\n`;
     markdown += `- Deterministic latency and async mutex integrity verified.\n`;

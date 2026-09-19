@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   buildDefect04AnalyticsPayload,
   buildExpectedDefect04Payload,
@@ -8,6 +8,7 @@ import {
   ExpectedAnalyticsPayload,
 } from '@/lib/mappers/defect-04';
 import { deriveAttributionStatus, AttributionState } from '@/lib/contracts/attribution';
+import { captureAttribution } from '@/lib/attribution';
 import { PayloadDiffViewer } from '@/components/ui/PayloadDiffViewer';
 
 interface FormErrors {
@@ -32,6 +33,10 @@ export function Defect4Form(): React.ReactElement {
 
   const [expectedPayload, setExpectedPayload] = useState<ExpectedAnalyticsPayload | null>(null);
   const [actualPayload, setActualPayload] = useState<Defect04ActualPayload | null>(null);
+
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   const validate = (): boolean => {
     const nextErrors: FormErrors = {};

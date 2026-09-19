@@ -159,10 +159,10 @@ The application includes 10 primary routes accessible via the navigation header.
      - Exactly **one** `demo_lead_success` event is pushed to `window.dataLayer`.
      - Exactly **one** row is written to the local CRM (`demo/data/crm-records.jsonl`).
 
-### 5.3 Route 3: Defect 1 — False Conversion on Invalid Submission (`/scenario/defect-1`)
+### 5.3 Route 3: Defect 1 — False Conversion on Invalid Submission (`http://localhost:3000/scenario/defect-1`)
 - **Real-World Analogue**: A GTM trigger configured on "Click - All Elements" matching the submit button CSS selector, rather than listening for successful form completion.
 - **Step-by-Step Test**:
-  1. Navigate to `/scenario/defect-1`.
+  1. Navigate to `http://localhost:3000/scenario/defect-1`.
   2. Leave all fields completely blank.
   3. Click "Submit Request".
   4. **Expected Result**:
@@ -172,10 +172,10 @@ The application includes 10 primary routes accessible via the navigation header.
      - No row is written to the CRM.
      - **Result**: **1 false conversion event in dataLayer, 0 CRM leads**. Ad algorithms would optimize toward users who click submit without filling the form!
 
-### 5.4 Route 4: Defect 2 — Duplicate Conversion Push (`/scenario/defect-2`)
+### 5.4 Route 4: Defect 2 — Duplicate Conversion Push (`http://localhost:3000/scenario/defect-2`)
 - **Real-World Analogue**: A legacy agency script remaining active on the site alongside a new tag manager trigger, causing double reporting.
 - **Step-by-Step Test**:
-  1. Navigate to `/scenario/defect-2`.
+  1. Navigate to `http://localhost:3000/scenario/defect-2`.
   2. Complete the form with valid fictional details (`demo.user@example.com`, etc.).
   3. Click "Submit Request".
   4. **Expected Result**:
@@ -185,10 +185,10 @@ The application includes 10 primary routes accessible via the navigation header.
      - The server's `Idempotency-Key` deduplication ensures only **1 CRM row** is created.
      - **Result**: **2 conversion events in dataLayer for 1 CRM lead**, cutting reported CPA in half!
 
-### 5.5 Route 5: Defect 3 — Missing Conversion Due to Typo (`/scenario/defect-3`)
+### 5.5 Route 5: Defect 3 — Missing Conversion Due to Typo (`http://localhost:3000/scenario/defect-3`)
 - **Real-World Analogue**: A developer refactoring code introduces a typo in the event name (`demo_lead_sucess`), while GTM listens for `demo_lead_success`.
 - **Step-by-Step Test**:
-  1. Navigate to `/scenario/defect-3`.
+  1. Navigate to `http://localhost:3000/scenario/defect-3`.
   2. Complete the form and submit.
   3. **Expected Result**:
      - Form submits successfully (201 Created) and 1 CRM record is created.
@@ -196,16 +196,16 @@ The application includes 10 primary routes accessible via the navigation header.
      - GTM triggers never fire because they listen for `'demo_lead_success'`.
      - **Result**: **0 conversions tracked in analytics despite 1 genuine paying lead in CRM**.
 
-### 5.6 Route 6: Defect 4 — Bad / Missing Event Parameters (`/scenario/defect-4`)
+### 5.6 Route 6: Defect 4 — Bad / Missing Event Parameters (`http://localhost:3000/scenario/defect-4`)
 - **Real-World Analogue**: Front-end dataLayer schema drift where field names are altered during a site update, dropping conversion value or lead type.
 - **Step-by-Step Test**:
-  1. Navigate to `/scenario/defect-4`.
+  1. Navigate to `http://localhost:3000/scenario/defect-4`.
   2. Complete the form and submit.
   3. **Expected Result**:
      - Event fires, but `form_id` resolves to `undefined` (dropped from payload) and `lead_type` defaults to `'contact'` instead of `'agency_audit_inquiry'`.
      - The Observability panel displays a side-by-side diff comparing the expected schema against the actual schema.
 
-### 5.7 Route 7: Defect 5 — UTM & GCLID Attribution Loss on SPA Route Navigation (`/scenario/defect-5`)
+### 5.7 Route 7: Defect 5 — UTM & GCLID Attribution Loss on SPA Route Navigation (`http://localhost:3000/scenario/defect-5`)
 - **Real-World Analogue**: A multi-step form built with a client-side router that pushes a new path without preserving the original URL query parameters, reading from `window.location.search` at submission.
 - **Step-by-Step Test**:
   1. Navigate to:  
@@ -220,12 +220,12 @@ The application includes 10 primary routes accessible via the navigation header.
      - The CRM record stores `lead_source: 'direct'` and empty GCLID.
      - **Result**: Paid ad spend is misattributed as direct traffic.
 
-### 5.8 Route 8: Defect 6 — Incomplete / Mismapped CRM Record (`/scenario/defect-6`)
+### 5.8 Route 8: Defect 6 — Incomplete / Mismapped CRM Record (`http://localhost:3000/scenario/defect-6`)
 - **Real-World Analogue**: An incorrect server-side webhook mapper or CRM integration mapping source fields into the wrong CRM properties.
 - **Step-by-Step Test**:
-  1. Navigate to `/scenario/defect-6`.
+  1. Navigate to `http://localhost:3000/scenario/defect-6`.
   2. Submit a valid lead with UTM parameters.
-  3. Navigate to `/crm`.
+  3. Navigate to `http://localhost:3000/crm`.
   4. **Expected Result**:
      - `campaign_name` is completely missing (dropped).
      - `utm_source` was placed into `lead_source_detail`, while `lead_source` remains empty.
@@ -331,5 +331,5 @@ npm run start
 When presenting this workspace to agency clients or trainees, emphasize the commercial context:
 - **Service Name**: ResponseLock Lead & Conversion Integrity Audit.
 - **Fixed Price**: Exactly **$350** (never varied or discounted).
-- **Turnaround**: 3 business days.
+- **Turnaround**: 5 business days.
 - **Core Lesson**: *A form that works does not mean conversion data is trustworthy.*

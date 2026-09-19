@@ -71,7 +71,7 @@ Rather than building tags, triggers, and variables manually from scratch, import
    gtm/responselock-demo-container.json
    ```
 4. Under **Choose workspace**:
-   - Select **Existing** and pick **Default Workspace** (or click **New** and name it `ResponseLock Initial`).
+   - Click **New** and name it `ResponseLock Demo Validation` (do NOT import into Default Workspace).
 5. Under **Choose an import option**:
    - Select **Merge**.
    - Choose **Overwrite conflicting tags, triggers, and variables**.
@@ -117,23 +117,33 @@ Rather than building tags, triggers, and variables manually from scratch, import
 
 ## 7. Step 6: Testing Conversion Event Firing
 
-1. In the application window, click **Launch Baseline** (or navigate to `/scenario/baseline`).
-2. Fill out the fictional lead form:
+1. In the application window, navigate to `http://localhost:3000/scenario/baseline`.
+2. **Accept Consent Mode v2 Banner**: Click **"Accept All Cookies"** on the banner at the bottom of the page. This updates `analytics_storage` to `'granted'`, allowing GA4 event tags to fire and transmit data.
+3. Fill out the fictional lead form:
    - Work Email: `demo.user@example.com`
    - Full Name: `Jane Doe`
    - Company Name: `Example Media Group`
    - Monthly Ad Spend: `$10,000 - $50,000`
    - Primary Tracking Challenge: `Attribution mismatch between GA4 and CRM`
-3. Click **Submit Test Lead**.
-4. Observe the results:
+4. Click **Submit Test Lead**.
+5. Observe the results:
    - In the Next.js app: The success panel renders, and the Observability Timeline records `demo_lead_success`.
    - In Google Tag Assistant: Event `demo_lead_success` appears in the left summary pane.
    - Click the event: Confirm that `GA4 Event - demo_lead_success` fired successfully.
-   - Inspect the tag parameters: Confirm `submission_id`, `form_id`, `lead_type`, `scenario`, and `attribution_status` are populated with clean, non-PII values.
+   - Inspect the tag parameters: Confirm all mapped parameters (`submission_id`, `form_id`, `lead_type`, `scenario`, `attribution_status`, `debug_mode`) are populated with clean, non-PII values.
 
 ---
 
-## 8. Next Steps & Manual Alternative
+## 8. Container Versioning & Preview-First Principle
+
+> [!IMPORTANT]
+> - **DO NOT publish the container immediately after import.**
+> - Local development and training operate directly against unpublished workspace drafts using Google Tag Assistant Preview mode.
+> - Publish ONLY if a permanent container version snapshot is required after full verification.
+
+---
+
+## 9. Next Steps & Manual Alternative
 
 - For complete click-by-click instructions on configuring GTM tags, triggers, and variables without the JSON file, consult `docs/gtm-manual-steps.md`.
 - To inspect real-time events and parameter verification in GA4, see `docs/ga4-debugview-setup.md`.

@@ -38,7 +38,7 @@ The file `gtm/responselock-demo-container.json` is a standard Google Tag Manager
 2. Select `gtm/responselock-demo-container.json` from this repository.
 
 ### Step 3: Choose Destination Workspace
-1. Choose **Existing** workspace (typically `Default Workspace`), or click **New** to create an isolated workspace named `ResponseLock Demo`.
+1. Click **New** to create an isolated workspace named `ResponseLock Demo Validation` (do NOT import directly into `Default Workspace` to prevent accidental tag pollution).
 
 ### Step 4: Choose Merge vs. Overwrite Option
 

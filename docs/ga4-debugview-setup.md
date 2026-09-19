@@ -36,6 +36,7 @@ In ResponseLock, `debug_mode` is enabled automatically through two complementary
 5. In the top-left corner of the DebugView screen, locate the **Debug Device** selector:
    - If multiple testers or devices are active, select your browser instance (e.g. *Google* or *Chrome*).
    - If no device appears, ensure the demo app is running, GTM Preview is connected, and trigger an interaction in the application.
+   - **Consent Requirement**: Ensure that you have clicked **"Accept All Cookies"** on the demo application's Consent Banner so `analytics_storage: 'granted'` is active; default denial suppresses regular hit collection.
 
 ---
 
@@ -109,6 +110,7 @@ Use this table during live or manual training audits to record timestamped obser
 2. **Events Appear in GTM Preview but Not in GA4**:
    - Confirm that `const - ga4_measurement_id` in GTM matches your GA4 Data Stream Measurement ID exactly.
    - Verify that your local network allows outbound HTTPS requests to `*.google-analytics.com`.
+   - **Check Consent Status**: If analytics consent is in default denied state, GA4 hit collection is blocked or restricted. Click **"Accept All Cookies"** on the consent banner in `http://localhost:3000`.
 3. **Parameters Missing in DebugView Detail Panel**:
    - Click the event circle in the seconds stream and wait 2 seconds for parameter hydration.
    - Verify that DataLayer Variables in GTM match the exact property names in `window.dataLayer`.

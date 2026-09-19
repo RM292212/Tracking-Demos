@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-DEF-005`  
 **Title**: Paid Media Attribution Loss Across Client-Side Multi-Step Form Navigation  
-**Audit Status**: Confirmed Defect  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: Critical  
 **Affected Route**: `/scenario/defect-5`  
 **Target Component**: `Defect5Form.tsx` / attribution capture handler  
@@ -128,9 +128,9 @@ This issue is ubiquitous in modern Single Page Applications (SPAs) and multi-ste
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
 | **Confirmed locally** | **FAIL (Defect Proven)** | CRM row contains `direct` source; dataLayer contains `attribution_status: 'dropped'`. |
-| **Requires GTM Preview** | **VULNERABLE** | Tag fires, but conversion event carries no campaign or click ID metadata. |
-| **Requires GA4 DebugView** | **VULNERABLE** | Traffic attributed to Direct / None instead of Google Ads Paid Search. |
-| **Not tested in Google Ads** | **BOUNDARY** | Offline Conversion Import (OCI) impossible due to missing GCLID in CRM. |
+| **Requires GTM Preview** | **PENDING (Vulnerable)** | Requires user verification in Tag Assistant: verify whether conversion tag fires without campaign or click ID metadata. |
+| **Requires GA4 DebugView** | **PENDING (Vulnerable)** | Requires user verification in GA4 DebugView: verify whether traffic attribution defaults to Direct / None when consent is granted. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). Without GCLID stored in CRM, Offline Conversion Import (OCI) closed-loop feedback cannot match. |
 
 ---
 

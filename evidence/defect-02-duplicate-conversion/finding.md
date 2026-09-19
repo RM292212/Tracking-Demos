@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-DEF-002`  
 **Title**: Duplicate Conversion Events Dispatched from Legacy and Modern Listeners  
-**Audit Status**: Confirmed Defect  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: High  
 **Affected Route**: `/scenario/defect-2`  
 **Target Component**: `Defect2Form.tsx` / `legacy-conversion-listener.ts`  
@@ -35,7 +35,7 @@ This defect is characteristic of multi-vendor transitions, website migrations, a
    `http://localhost:3000/scenario/defect-2?utm_source=google&utm_medium=cpc&utm_campaign=responselock_demo&gclid=DEMO-GCLID-002`
 3. Enter valid synthetic lead information:
    - **Full Name**: `Jordan Taylor`
-   - **Work Email**: `jordan.taylor@example.org`
+   - **Work Email**: `jordan.taylor@example.com`
    - **Company Name**: `Horizon Media Labs`
    - **Monthly Ad Spend**: `$25,000 - $50,000`
    - **Primary Challenge**: `Double-counting in Google Ads reporting`
@@ -129,10 +129,10 @@ The backend correctly deduplicated the request, storing only a single row:
 
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
-| **Confirmed locally** | **FAIL (Defect Proven)** | 1 CRM row persisted, but 2 identical `demo_lead_success` events in `window.dataLayer`. |
-| **Requires GTM Preview** | **VULNERABLE** | Tag Assistant displays 2 separate triggers firing GA4 conversion tags for 1 user action. |
-| **Requires GA4 DebugView** | **VULNERABLE** | DebugView shows 2 `demo_lead_success` key events registered within a 1-second window. |
-| **Not tested in Google Ads** | **BOUNDARY** | Without transaction deduplication IDs in Ads, 2 conversions would be counted. |
+| **Confirmed locally** | **FAIL (Defect Proven)** | 1 CRM row persisted, but 2 identical `demo_lead_success` events sharing the same `submission_id` present in `window.dataLayer`. |
+| **Requires GTM Preview** | **PENDING (Vulnerable)** | Requires user verification in Tag Assistant: confirm whether 2 separate triggers fire `GA4 Event - demo_lead_success` tags for 1 user action. |
+| **Requires GA4 DebugView** | **PENDING (Vulnerable)** | Requires user verification in GA4 DebugView: confirm whether 2 `demo_lead_success` key events are received within the flight window when consent is granted. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). Without transaction deduplication IDs configured in Ads, 2 conversions could be recorded for a single lead. |
 
 ---
 

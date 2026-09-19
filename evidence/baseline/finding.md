@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-BASE-001`  
 **Title**: Baseline Intact Lead Conversion Chain Verification  
-**Audit Status**: Verified Baseline  
+**Audit Status**: Verified Baseline (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: Informational (Architecture Reference Standard)  
 **Affected Route**: `/scenario/baseline`  
 **Target Component**: `BaselineForm.tsx` / `POST /api/leads`  
@@ -159,10 +159,10 @@ Content-Type: application/json
 
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
-| **Confirmed locally** | **PASS** | Form validates, network responds 201, exactly 1 CRM row written, 1 dataLayer event pushed. |
-| **Requires GTM Preview** | **PASS (Ready)** | GTM custom event trigger for `demo_lead_success` evaluates to true; tag fires cleanly. |
-| **Requires GA4 DebugView** | **PASS (Ready)** | Event `demo_lead_success` populates in DebugView with standard parameters and no PII warnings. |
-| **Not tested in Google Ads** | **BOUNDARY** | Conversion upload verified up to GA4 boundary. Google Ads is conceptual in local training. |
+| **Confirmed locally** | **PASS** | Form validates, network responds 201, exactly 1 CRM row written, 1 `demo_lead_success` dataLayer event pushed. |
+| **Requires GTM Preview** | **PENDING** | Requires user verification in Tag Assistant: confirm custom event trigger matches `demo_lead_success` and `GA4 Event - demo_lead_success` tag fires once. |
+| **Requires GA4 DebugView** | **PENDING** | Requires user verification in GA4 DebugView: confirm incoming `demo_lead_success` key event with standard parameters when analytics consent is granted. |
+| **Not tested in Google Ads** | **NOT TESTED** | Local conversion chain verified up to dataLayer. GA4 DebugView remains pending; Google Ads conversion import and bidding effects are strictly conceptual in local training. |
 
 ---
 
@@ -170,9 +170,9 @@ Content-Type: application/json
 
 When this baseline pattern is maintained:
 1. **Truthful Return on Ad Spend (ROAS)**: Media buyers evaluate campaigns based on real customer inquiries rather than accidental clicks or bot spam.
-2. **Optimal Smart Bidding Feedback**: Target CPA (tCPA) and Target ROAS (tROAS) bidding algorithms receive clean conversion signals, reducing cost-per-lead by 20% to 35% over time.
+2. **Optimal Smart Bidding Feedback**: Target CPA (tCPA) and Target ROAS (tROAS) bidding algorithms receive clean conversion signals, which can improve automated bidding efficiency and reduce wasted spend over time.
 3. **Flawless Sales Alignment**: Marketing and Sales report the exact same lead volume; CRM lead records match ad platform conversions 1:1.
-4. **Zero Compliance Risk**: Full compliance with GDPR/CCPA regulations due to total exclusion of PII from analytics streams.
+4. **Reduced Privacy Compliance Risk**: Substantially mitigates GDPR/CCPA analytics compliance risk by strictly excluding personal identifiers from the client-side dataLayer.
 
 ---
 

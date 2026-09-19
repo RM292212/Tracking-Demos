@@ -151,8 +151,11 @@ The local CRM simulator stores lead records in `demo/data/crm-records.jsonl` and
 ### 6.2 Inspecting the Raw JSONL File
 Auditors can inspect records directly via the command line:
 
-```bash
-# Read the last record entered into the CRM store
+```powershell
+# PowerShell (Windows):
+Get-Content demo\data\crm-records.jsonl -Tail 1
+
+# Bash (macOS/Linux):
 tail -n 1 demo/data/crm-records.jsonl
 ```
 

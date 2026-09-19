@@ -1,9 +1,9 @@
 # Audit Finding: Premature Conversion Event Dispatched on Invalid Form Submission Click
 
 **Finding ID**: `RL-AUDIT-DEF-001`  
-**Title**: Premature Conversion Event Dispatched on Invalid Form Submission Click  
-**Audit Status**: Confirmed Defect  
-**Severity**: High  
+**Title**: Premature Conversion Event Dispatch on Unvalidated Form Submit Button Click  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
+**Severity**: Critical  
 **Affected Route**: `/scenario/defect-1`  
 **Target Component**: `Defect1Form.tsx`  
 
@@ -107,17 +107,17 @@ Delta rows written to store: 0
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
 | **Confirmed locally** | **FAIL (Defect Proven)** | 0 API calls, 0 CRM rows, but 1 conversion event present in `window.dataLayer`. |
-| **Requires GTM Preview** | **VULNERABLE** | Tag Assistant confirms conversion tag fires immediately on invalid button click. |
-| **Requires GA4 DebugView** | **VULNERABLE** | DebugView records incoming `demo_lead_success` key event for invalid form attempt. |
-| **Not tested in Google Ads** | **BOUNDARY** | Ads conversion action would falsely record conversion and attribute bidding credit. |
+| **Requires GTM Preview** | **PENDING (Vulnerable)** | Requires user verification in Tag Assistant: verify whether `GA4 Event - demo_lead_success` fires on invalid button click. |
+| **Requires GA4 DebugView** | **PENDING (Vulnerable)** | Requires user verification in GA4 DebugView: verify whether `demo_lead_success` key event is received for invalid form attempt when consent is granted. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). If that signal is configured as a primary Google Ads conversion, included in the relevant campaign goal, and used for conversion-based bidding, it may provide misleading optimization input. |
 
 ---
 
 ## 6. Business Impact
 
-1. **Severe Ad Spend Misallocation**: Automated bidding algorithms (Target CPA / Maximize Conversions) optimize to minimize cost-per-conversion. Because unqualified visitors and bot traffic frequently click submit buttons without completing forms, the bidding algorithm learns that these users are high-value converters. Ad spend is systematically redirected away from genuine prospects toward junk clickers.
-2. **False Cost-Per-Acquisition (CPA)**: If 30% of button clicks are invalid attempts, reported CPA appears 30% cheaper in the ad dashboard than actual business reality ($70 apparent CPA vs. $100 actual cost per legitimate lead).
-3. **Sales & Marketing Friction**: Marketing reports 150 conversions for the month, while Sales reports only 100 leads in the CRM, destroying organizational trust in marketing attribution.
+1. **Potential Ad Spend Misallocation**: The invalid submission creates a false conversion signal. If that signal is configured as a primary Google Ads conversion, included in the relevant campaign goal, and used for conversion-based bidding, it may provide misleading optimization input to automated bidding algorithms.
+2. **False Cost-Per-Acquisition (CPA)**: If button clicks fire conversions prior to validation, reported CPA appears artificially cheaper in analytics than actual business reality.
+3. **Sales & Marketing Friction**: Marketing reports conversions for uncompleted submissions while Sales records zero matching CRM leads, degrading trust in pipeline data.
 
 ---
 

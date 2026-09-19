@@ -35,7 +35,7 @@ Because this workspace simulates production-grade marketing technology (Google T
 - **Mandate**: All testing, demonstration records, automated fixtures, and documentation examples must use fictional contact information.
 - **Approved Entities**:
   - Name: `Demo User`, `Jane Doe`, `Alex Smith`
-  - Email: `demo.user@example.com`, `test.agency@example.org`, `lead@domain.com` (strictly `@example.com`, `@example.org`, `@example.net`, `@domain.com`)
+  - Email: `demo.user@example.com`, `test.agency@example.org`, `lead@example.net` (strictly `@example.com`, `@example.org`, `@example.net`)
   - Phone: `+1-555-0100`, `(555) 555-0199` (strictly `555-01xx` exchange reserved for fictional use by NANPA)
   - Company: `Example Media Group`, `Acme Media Partners`, `Demo Paid Ads LLC`
 - **Enforcement**: Automated repository-wide regex scanner (`npm run scan:pii`).
@@ -85,7 +85,7 @@ Because this workspace simulates production-grade marketing technology (Google T
 
 ### Rule 13: Exact $350 Pricing and Service Scope Fidelity
 - **Mandate**: The ResponseLock Lead & Conversion Integrity Audit is a fixed-scope service priced at exactly **$350**.
-- **Prohibition**: Never alter, discount, inflate, or vary the $350 price in proposals, invoices, documentation, or sales scripts. The 3-business-day turnaround and single-form audit scope must remain constant across all collateral.
+- **Prohibition**: Never alter, discount, inflate, or vary the $350 price in proposals, invoices, documentation, or sales scripts. The 5-business-day turnaround and up to three-funnel audit scope must remain constant across all collateral.
 
 ### Rule 14: Zero Fabricated Testimonials, Client Logos, or Savings Figures
 - **Mandate**: Marketing materials, sample audit reports, and demo UI must never display fake Fortune 500 logos, fabricated client testimonials, or invented ROI percentages (e.g., "Saved $45,000 in wasted ad spend").

@@ -2,7 +2,7 @@
 
 **Finding ID**: `RL-AUDIT-DEF-003`  
 **Title**: Silent Conversion Drop Due to Event Name Typo in Analytics Constant  
-**Audit Status**: Confirmed Defect  
+**Audit Status**: Confirmed Defect (Confirmed locally; GTM/GA4 external verification pending)  
 **Severity**: Critical  
 **Affected Route**: `/scenario/defect-3`  
 **Target Component**: `Defect3Form.tsx`  
@@ -35,7 +35,7 @@ This failure is rampant during frontend re-platforming and refactoring initiativ
    `http://localhost:3000/scenario/defect-3?utm_source=google&utm_medium=cpc&utm_campaign=responselock_demo&gclid=DEMO-GCLID-003`
 3. Enter valid synthetic lead information:
    - **Full Name**: `Sam Rivers`
-   - **Work Email**: `sam.rivers@example.net`
+   - **Work Email**: `sam.rivers@example.com`
    - **Company Name**: `River Marketing Group`
    - **Monthly Ad Spend**: `$10,000 - $25,000`
    - **Primary Challenge**: `Ads reporting shows zero conversions despite sales leads arriving`
@@ -131,9 +131,9 @@ The database proves the lead was genuine and processed:
 | Verification Layer | Status | Observational Notes |
 |---|---|---|
 | **Confirmed locally** | **FAIL (Defect Proven)** | 1 valid CRM record created, but event name pushed is `demo_lead_sucess`. |
-| **Requires GTM Preview** | **CRITICAL FAILURE** | Tag Assistant trigger fails to match; conversion tag does not fire. |
-| **Requires GA4 DebugView** | **CRITICAL FAILURE** | DebugView shows 0 `demo_lead_success` key events received. |
-| **Not tested in Google Ads** | **BOUNDARY** | Zero conversions imported into Google Ads campaign. |
+| **Requires GTM Preview** | **PENDING (Critical Failure)** | Requires user verification in Tag Assistant: confirm that trigger fails to match `demo_lead_sucess` and `GA4 Event - demo_lead_success` tag does not fire. |
+| **Requires GA4 DebugView** | **PENDING (Critical Failure)** | Requires user verification in GA4 DebugView: confirm that zero `demo_lead_success` key events are received. |
+| **Not tested in Google Ads** | **NOT TESTED** | Untested in Google Ads (conceptual boundary). In a live account, zero conversions would be imported due to upstream GTM trigger omission. |
 
 ---
 
