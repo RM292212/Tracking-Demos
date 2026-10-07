@@ -136,8 +136,8 @@ This guide catalogs concrete failure scenarios encountered when installing, conf
 - **Diagnostics**:
   - Inspect `window.dataLayer` in DevTools: look for `consent` command with denied storage permissions.
 - **Fixes**:
-  - Click "Accept All Cookies" on the floating Consent Banner, or click "Grant Consent" in the Test Conditions panel.
-  - To test denied state intentionally, leave banner unaccepted or toggle to Denied.
+  - Use the actual consent UI only if present and wired for the route under test. The legacy Test Conditions panel's consent flag is diagnostic only and does not change Google consent state.
+  - Verify consent commands in the data layer or Tag Assistant before drawing conclusions; do not infer consent from a panel flag.
 
 ---
 
@@ -338,7 +338,7 @@ This guide catalogs concrete failure scenarios encountered when installing, conf
   - Look for red blocked requests in Chrome DevTools Network tab.
 - **Fixes**:
   - Whitelist `localhost:3000` in your ad blocker.
-  - Note: This is an intentional educational condition supported by the Test Conditions panel.
+  - The legacy Test Conditions panel can record an ad-blocker diagnostic flag, but it does not block GTM. A browser extension or browser privacy feature is required to reproduce this condition.
 
 ---
 

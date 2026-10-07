@@ -63,31 +63,35 @@ test.describe('Observability & Realism Controls E2E Suite', () => {
     expect(download.suggestedFilename()).toMatch(/^sanitized-manifest-.*\.json$/);
   });
 
-  test('test conditions panel toggles environmental simulations and shows diagnostic notice', async ({ page }) => {
+  test('test conditions panel records planned flags without suppressing GTM', async ({ page }) => {
     await page.goto('/evidence');
     await page.getByRole('button', { name: /telemetry & simulators/i }).click();
+    const gtmBootstrap = page.locator('#gtm-container-script');
+    await expect(gtmBootstrap).toHaveCount(1);
 
     // Initially diagnostic notice is not visible
     await expect(page.getByTestId('adblocker-diagnostic-notice')).toHaveCount(0);
 
-    // Toggle Ad-blocker simulation on
+    // Record the planned ad-blocker condition; this is not a live blocker.
     const adBlockerToggle = page.getByTestId('toggle-adBlocker');
     await adBlockerToggle.check();
 
     // Diagnostic notice should now appear
     const notice = page.getByTestId('adblocker-diagnostic-notice');
     await expect(notice).toBeVisible();
-    await expect(notice).toContainText(/Ad-blocker simulation is ACTIVE/i);
+    await expect(notice).toContainText(/Planned setting recorded/i);
+    await expect(notice).toContainText(/does not suppress GTM/i);
+    await expect(gtmBootstrap).toHaveCount(1);
 
     // Verify window.__RL_TEST_CONDITIONS__ state
     const conditions = await page.evaluate(() => window.__RL_TEST_CONDITIONS__);
     expect(conditions?.adBlocker).toBe(true);
 
-    // Toggle Slow Network simulation on
+    // Record a second planned condition; request timing is not altered.
     const slowNetToggle = page.getByTestId('toggle-slowNetwork');
     await slowNetToggle.check();
 
-    // Active count badge should show 2 active
+    // The active count reflects selected flags, not injected conditions.
     await expect(page.getByText('2 active')).toBeVisible();
 
     // Reset all simulations

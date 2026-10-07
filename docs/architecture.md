@@ -18,9 +18,9 @@ The system is built on Next.js 15 App Router with zero external database depende
 
 ---
 
-## 2. End-to-End Conversion Data Flow
+## 2. Local Conversion Data Flow
 
-The diagram below illustrates the complete 12-step marketing conversion chain, from initial ad click to final CRM persistence and analytics event dispatch:
+The legacy lab models the chain from ad click through a local CRM write and dataLayer event. GTM, GA4, and Ads are separate verification boundaries. The GTM container is currently empty, GA4 access is pending, and no Ads conversion has been tested.
 
 ```
 [ Paid Ad Click with UTM/GCLID ]
@@ -67,15 +67,16 @@ The diagram below illustrates the complete 12-step marketing conversion chain, f
                         - Render Success UI from response payload
                                       │
                                       ▼
-                      [ 11. Push window.dataLayer ('demo_lead_success') ]
-                        - Strict 7-key whitelist validation
-                        - Zero PII (names, emails, phones redacted)
+[ 11. Push window.dataLayer ('demo_lead_success') ]
+                        - Legacy scenarios use a frozen 7-key contract
+                        - Alder V2 uses a separate 14-field allowlist
+                        - No form values or raw URLs enter the analytics payload
                                       │
                                       ▼
-                      [ 12. GTM / GA4 / Ads (Simulated / Test) ]
-                        - GTM Trigger detects custom event
-                        - GA4 records Key Event
-                        - Google Ads Conversion Action (conceptual)
+                      [ Optional external verification — pending ]
+                        - GTM Preview: trigger and tag behavior
+                        - GA4 DebugView: event receipt
+                        - Ads: no conversion tested
 ```
 
 ---
@@ -94,8 +95,8 @@ demo/src/lib/contracts/
 └── schema.ts        # Zod request/response validation schemas and TypeScript types
 ```
 
-### 3.1 Strict Analytics Whitelist (7 Approved Keys)
-To enforce the strict Zero-PII policy, `buildAnalyticsPayload()` guarantees that only the following 7 keys ever enter `window.dataLayer`:
+### 3.1 Frozen Legacy Analytics Whitelist (7 Keys)
+The preserved legacy lab uses `buildAnalyticsPayload()` with the following seven keys:
 
 ```typescript
 export interface AnalyticsPayload {
@@ -109,7 +110,11 @@ export interface AnalyticsPayload {
 }
 ```
 
-Any attempt to pass names, emails, phone numbers, or arbitrary keys is automatically rejected at runtime.
+This contract is preserved for the six legacy defect scenarios. V2 uses a separate additive contract described in [CONTRACTS.md](CONTRACTS.md); it does not change this seven-key builder.
+
+### 3.2 Alder V2 Confirmation and Retry Flow
+
+The V2 route at `/` validates the consultation form, sends the request to the local `/api/leads` handler, and waits for a schema-valid response whose submission ID matches the request. Only then does it push the canonical `demo_lead_success` event for `alder_consultation`. The event contains allowlisted attribution fields but no contact details. A session-scoped emitted-ID guard prevents duplicate pushes. While the result is unresolved, the full request is kept in that tab's `sessionStorage` so a refresh can retry the same values with the same idempotency key. `/audit` displays local evidence and the limits of external verification.
 
 ---
 

@@ -25,13 +25,13 @@ describe('Adversarial Challenge - Contract Pack Runtime Assertions', () => {
         extra_nested: { dangerous: true },
       };
 
-      const result = buildAnalyticsPayload(dirtyInput as any);
+      const result = buildAnalyticsPayload(dirtyInput);
 
       // Verify disallowed keys are stripped
-      expect((result as any).foo).toBeUndefined();
-      expect((result as any).secret_token).toBeUndefined();
-      expect((result as any).is_admin).toBeUndefined();
-      expect((result as any).extra_nested).toBeUndefined();
+      expect('foo' in result).toBe(false);
+      expect('secret_token' in result).toBe(false);
+      expect('is_admin' in result).toBe(false);
+      expect('extra_nested' in result).toBe(false);
 
       // Verify only approved keys exist in output
       const keys = Object.keys(result);

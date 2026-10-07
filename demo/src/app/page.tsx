@@ -1,407 +1,162 @@
 import React from 'react';
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ROUTE_REGISTRY, type VerificationLayer } from '@/lib/contracts/routes';
+import { BusinessLeadForm } from '@/components/BusinessLeadForm';
 
 export const metadata: Metadata = {
-  title: 'ResponseLock | Lead & Conversion Integrity Demo Workspace',
+  title: 'Alder Office Services | ResponseLock portfolio demo',
   description:
-    'Educational workspace proving the ResponseLock Lead & Conversion Integrity Audit ($350 fixed-scope service). Inspect, test, and break every step in the marketing conversion chain.',
+    'Dependable office and commercial cleaning, thoughtfully planned around your team and your space.',
 };
 
-function getBadgeStyle(layer: VerificationLayer): React.CSSProperties {
-  switch (layer) {
-    case 'Confirmed locally':
-      return {
-        backgroundColor: 'var(--color-success-bg)',
-        borderColor: 'var(--color-success-border)',
-        color: 'var(--color-success-text)',
-      };
-    case 'Requires GTM Preview':
-      return {
-        backgroundColor: 'var(--color-info-bg)',
-        borderColor: 'var(--color-info-border)',
-        color: 'var(--color-info-text)',
-      };
-    case 'Requires GA4 DebugView':
-      return {
-        backgroundColor: 'var(--color-warning-bg)',
-        borderColor: 'var(--color-warning-border)',
-        color: 'var(--color-warning-text)',
-      };
-    case 'Not tested in Google Ads':
-      return {
-        backgroundColor: 'var(--color-bg-surface-raised)',
-        borderColor: 'var(--color-border-default)',
-        color: 'var(--color-text-muted)',
-      };
-    default:
-      return {
-        backgroundColor: 'var(--color-bg-surface-raised)',
-        borderColor: 'var(--color-border-default)',
-        color: 'var(--color-text-secondary)',
-      };
-  }
-}
+const services = [
+  {
+    number: '01',
+    title: 'Office cleaning',
+    text: 'A considered clean for desks, shared spaces, kitchens and the details people notice every day.',
+    icon: '✳',
+  },
+  {
+    number: '02',
+    title: 'Common areas',
+    text: 'Welcoming lobbies, meeting rooms and corridors, ready for the people who walk through them.',
+    icon: '⌂',
+  },
+  {
+    number: '03',
+    title: 'Floor care',
+    text: 'Practical care for hard floors and carpet, planned to suit the finish and rhythm of your workplace.',
+    icon: '◌',
+  },
+];
+
+const steps = [
+  ['01', 'Tell us about your space', 'A short conversation gives us a feel for your site, schedule and priorities.'],
+  ['02', 'Get a clear plan', 'We walk through the details and outline a straightforward, tailored cleaning plan.'],
+  ['03', 'Settle into a better rhythm', 'Your team arrives to a space that feels cared for, with a familiar point of contact.'],
+];
 
 export default function HomePage(): React.ReactElement {
-  const scenarioRoutes = ROUTE_REGISTRY.filter((r) => r.scenarioId !== null);
-  const toolRoutes = ROUTE_REGISTRY.filter((r) => r.scenarioId === null && r.path !== '/');
-
   return (
-    <section aria-labelledby="home-hero-title">
-      {/* Hero Header */}
-      <div
-        style={{
-          borderBottom: '1px solid var(--color-border-subtle)',
-          paddingBottom: 'var(--space-8)',
-          marginBottom: 'var(--space-8)',
-        }}
-      >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 'var(--space-2)',
-            padding: '4px 12px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary-50)',
-            color: 'var(--color-primary-700)',
-            fontSize: 'var(--font-size-xs)',
-            fontWeight: 'var(--font-weight-semibold)',
-            marginBottom: 'var(--space-3)',
-          }}
-        >
-          Fixed-Scope Marketing Agency Training ($350 Audit Service)
-        </div>
-        <h1
-          id="home-hero-title"
-          style={{
-            fontSize: 'var(--font-size-3xl)',
-            fontWeight: 'var(--font-weight-bold)',
-            color: 'var(--color-text-primary)',
-            letterSpacing: '-0.025em',
-            lineHeight: 'var(--line-height-tight)',
-          }}
-        >
-          ResponseLock Lead &amp; Conversion Integrity Audit Demo
-        </h1>
-        <p
-          style={{
-            marginTop: 'var(--space-3)',
-            color: 'var(--color-text-secondary)',
-            fontSize: 'var(--font-size-lg)',
-            maxWidth: '840px',
-            lineHeight: 'var(--line-height-relaxed)',
-          }}
-        >
-          A local training and demonstration workspace that makes the entire marketing conversion chain
-          visible, inspectable, and breakable: from ad click with UTM/GCLID parameters, through form validation,
-          <code>dataLayer</code> pushes, and Google Tag Manager triggers, to CRM record mapping.
-        </p>
-
-        {/* Core Teaching Thesis Callout */}
-        <div
-          role="note"
-          aria-label="Core Educational Thesis"
-          style={{
-            marginTop: 'var(--space-6)',
-            backgroundColor: 'var(--color-bg-surface)',
-            borderLeft: '4px solid var(--color-primary-500)',
-            borderRadius: 'var(--radius-md)',
-            padding: 'var(--space-4) var(--space-6)',
-          }}
-        >
-          <p
-            style={{
-              fontSize: 'var(--font-size-base)',
-              fontWeight: 'var(--font-weight-semibold)',
-              color: 'var(--color-text-primary)',
-              margin: 0,
-            }}
-          >
-            Core Principle: A form that works does NOT mean conversion data is trustworthy.
-          </p>
-          <p
-            style={{
-              marginTop: 'var(--space-1)',
-              fontSize: 'var(--font-size-sm)',
-              color: 'var(--color-text-secondary)',
-              margin: 0,
-            }}
-          >
-            Tracking can report phantom conversions on broken forms, drop real conversions from event-name typos,
-            count duplicates on reload, strip UTM attribution across route changes, or misplace ad spend in the CRM.
-          </p>
-        </div>
+    <div className="alder-site" id="top">
+      <div className="portfolio-note" role="note">
+        <span className="portfolio-note__dot" aria-hidden="true" />
+        Fictional business · portfolio sample
       </div>
 
-      {/* Primary Conversion Chain Overview */}
-      <div style={{ marginBottom: 'var(--space-10)' }}>
-        <h2
-          style={{
-            fontSize: 'var(--font-size-xl)',
-            fontWeight: 'var(--font-weight-bold)',
-            color: 'var(--color-text-primary)',
-            marginBottom: 'var(--space-4)',
-          }}
-        >
-          Conversion Chain Scenarios
-        </h2>
-        <p
-          style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: 'var(--font-size-sm)',
-            marginBottom: 'var(--space-6)',
-          }}
-        >
-          Compare the intact baseline standard against six production-shaped tracking defects encountered in client audits.
-        </p>
+      <header className="alder-header">
+        <a className="alder-brand" href="#top" aria-label="Alder Office Services home">
+          <span className="alder-brand__mark" aria-hidden="true"><i /><i /><i /></span>
+          <span className="alder-brand__text">alder<span>office services</span></span>
+        </a>
+        <nav className="alder-nav" aria-label="Main navigation">
+          <a href="#services">Services</a>
+          <a href="#approach">Our approach</a>
+          <a href="#about">About Alder</a>
+        </nav>
+        <a className="button button--nav" href="#consultation">Request a walkthrough <span aria-hidden="true">↗</span></a>
+      </header>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: 'var(--space-4)',
-          }}
-        >
-          {scenarioRoutes.map((route) => {
-            const isBaseline = route.scenarioId === 'baseline';
-            return (
-              <article
-                key={route.path}
-                style={{
-                  backgroundColor: 'var(--color-bg-surface)',
-                  border: `1px solid ${isBaseline ? 'var(--color-primary-500)' : 'var(--color-border-subtle)'}`,
-                  borderRadius: 'var(--radius-lg)',
-                  padding: 'var(--space-5)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      marginBottom: 'var(--space-2)',
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: 'var(--font-size-xs)',
-                        fontWeight: 'var(--font-weight-semibold)',
-                        color: isBaseline ? 'var(--color-primary-500)' : 'var(--color-text-muted)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                      }}
-                    >
-                      {isBaseline ? 'Reference Standard' : `Defect Scenario`}
-                    </span>
-                  </div>
+      <main id="main-content">
+        <section className="alder-hero" aria-labelledby="hero-title">
+          <div className="alder-hero__copy">
+            <p className="eyebrow"><span /> A little more care in every corner</p>
+            <h1 id="hero-title">A clearer space<br />for <em>better work.</em></h1>
+            <p className="alder-hero__intro">
+              Thoughtful commercial cleaning for offices and shared spaces. A dependable team, a considered plan, and one less thing on your mind.
+            </p>
+            <div className="alder-hero__actions">
+              <a className="button button--primary" href="#consultation">Let’s talk about your space <span aria-hidden="true">↗</span></a>
+              <a className="text-link" href="#services">Explore our services <span aria-hidden="true">↓</span></a>
+            </div>
+            <div className="hero-reassurance">
+              <span className="hero-reassurance__icon" aria-hidden="true">✳</span>
+              <p><strong>Made to fit your workplace.</strong><br />A practical plan that works around your people.</p>
+            </div>
+          </div>
 
-                  <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)' }}>
-                    <Link
-                      href={route.path}
-                      style={{
-                        color: 'var(--color-text-primary)',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      {route.title}
-                    </Link>
-                  </h3>
+          <div className="alder-hero__visual" aria-label="Illustration of a calm, sunlit modern office" role="img">
+            <div className="visual-sun" />
+            <div className="visual-window"><span /><span /><span /></div>
+            <div className="visual-wall-art"><i /><i /><i /></div>
+            <div className="visual-shelf"><i /><i /><i /><i /></div>
+            <div className="visual-plant visual-plant--left"><i /><i /><i /><b /></div>
+            <div className="visual-desk"><span /><i /><b /></div>
+            <div className="visual-chair"><i /><b /></div>
+            <div className="visual-plant visual-plant--right"><i /><i /><i /><b /></div>
+            <div className="visual-caption"><span>01 — A fresh perspective</span><span>EST. TO FIT YOUR DAY</span></div>
+          </div>
+          <div className="hero-bottomline"><span>OFFICES · WORKSPACES · SHARED PLACES</span><span>GOOD WORK STARTS HERE <b>↓</b></span></div>
+        </section>
 
-                  <p
-                    style={{
-                      marginTop: 'var(--space-2)',
-                      color: 'var(--color-text-secondary)',
-                      fontSize: 'var(--font-size-sm)',
-                      lineHeight: 'var(--line-height-normal)',
-                    }}
-                  >
-                    {route.description}
-                  </p>
-                </div>
-
-                <div style={{ marginTop: 'var(--space-4)' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 'var(--space-1)',
-                      marginBottom: 'var(--space-4)',
-                    }}
-                  >
-                    {route.verificationLayers.map((layer) => {
-                      const style = getBadgeStyle(layer);
-                      return (
-                        <span
-                          key={layer}
-                          style={{
-                            fontSize: 'var(--font-size-xs)',
-                            padding: '2px 8px',
-                            borderRadius: 'var(--radius-sm)',
-                            border: '1px solid transparent',
-                            ...style,
-                          }}
-                        >
-                          {layer}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  <Link
-                    href={route.path}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 'var(--space-1)',
-                      color: 'var(--color-primary-500)',
-                      fontSize: 'var(--font-size-sm)',
-                      fontWeight: 'var(--font-weight-semibold)',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Open Scenario &rarr;
-                  </Link>
-                </div>
+        <section className="services-section section-wrap" id="services" aria-labelledby="services-title">
+          <div className="section-heading">
+            <div><p className="eyebrow"><span /> A thoughtful clean, from the ground up</p><h2 id="services-title">The right care for<br /><em>the way you work.</em></h2></div>
+            <p className="section-heading__aside">Every workplace has its own pace. We shape a steady, dependable cleaning routine around yours.</p>
+          </div>
+          <div className="service-grid">
+            {services.map((service) => (
+              <article className="service-card" key={service.number}>
+                <div className="service-card__top"><span>{service.number} / 03</span><span className="service-card__icon" aria-hidden="true">{service.icon}</span></div>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+                <a href="#consultation" aria-label={`Ask us about ${service.title}`}>Ask us about this <span aria-hidden="true">↗</span></a>
               </article>
-            );
-          })}
-        </div>
-      </div>
+            ))}
+          </div>
+        </section>
 
-      {/* Tools & Observability Section */}
-      <div style={{ marginBottom: 'var(--space-10)' }}>
-        <h2
-          style={{
-            fontSize: 'var(--font-size-xl)',
-            fontWeight: 'var(--font-weight-bold)',
-            color: 'var(--color-text-primary)',
-            marginBottom: 'var(--space-4)',
-          }}
-        >
-          Observability &amp; CRM Tools
-        </h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: 'var(--space-4)',
-          }}
-        >
-          {toolRoutes.map((tool) => (
-            <article
-              key={tool.path}
-              style={{
-                backgroundColor: 'var(--color-bg-surface)',
-                border: '1px solid var(--color-border-subtle)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'var(--space-5)',
-              }}
-            >
-              <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)' }}>
-                <Link
-                  href={tool.path}
-                  style={{
-                    color: 'var(--color-accent-500)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {tool.title}
-                </Link>
-              </h3>
-              <p
-                style={{
-                  marginTop: 'var(--space-2)',
-                  color: 'var(--color-text-secondary)',
-                  fontSize: 'var(--font-size-sm)',
-                }}
-              >
-                {tool.description}
-              </p>
-              <div style={{ marginTop: 'var(--space-4)' }}>
-                <Link
-                  href={tool.path}
-                  style={{
-                    color: 'var(--color-accent-500)',
-                    fontSize: 'var(--font-size-sm)',
-                    fontWeight: 'var(--font-weight-semibold)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  Launch Tool &rarr;
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+        <section className="approach-section" id="approach" aria-labelledby="approach-title">
+          <div className="approach-inner section-wrap">
+            <div className="approach-intro">
+              <p className="eyebrow eyebrow--light"><span /> Simple by design</p>
+              <h2 id="approach-title">A good clean.<br /><em>A good relationship.</em></h2>
+              <p>We believe the best service is the one that quietly makes your day easier. Clear communication and familiar faces are part of the job.</p>
+              <a className="button button--light" href="#consultation">Meet your cleaning partner <span aria-hidden="true">↗</span></a>
+            </div>
+            <ol className="process-list">
+              {steps.map(([number, title, text]) => (
+                <li key={number}>
+                  <span className="process-list__number">{number}</span>
+                  <div><h3>{title}</h3><p>{text}</p></div>
+                  <span className="process-list__arrow" aria-hidden="true">↗</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-      {/* Documentation & Audit Assets Reference */}
-      <div
-        style={{
-          backgroundColor: 'var(--color-bg-surface)',
-          border: '1px solid var(--color-border-subtle)',
-          borderRadius: 'var(--radius-lg)',
-          padding: 'var(--space-6)',
-        }}
-      >
-        <h2
-          style={{
-            fontSize: 'var(--font-size-lg)',
-            fontWeight: 'var(--font-weight-bold)',
-            color: 'var(--color-text-primary)',
-            marginBottom: 'var(--space-2)',
-          }}
-        >
-          Audit Runbooks &amp; Operational Documentation
-        </h2>
-        <p
-          style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: 'var(--font-size-sm)',
-            marginBottom: 'var(--space-4)',
-          }}
-        >
-          The workspace includes a complete professional agency service pack supporting the $350 fixed-scope audit:
-        </p>
+        <section className="testimonial-section section-wrap" id="about" aria-label="A note from an Alder client">
+          <div className="quote-mark" aria-hidden="true">“</div>
+          <div className="quote-content">
+            <p className="eyebrow"><span /> A note from a client</p>
+            <blockquote>“It’s a relief to know the space is in good hands. The team is thoughtful, consistent, and easy to reach.”</blockquote>
+            <div className="quote-credit"><span className="quote-avatar" aria-hidden="true">JM</span><span><strong>Jordan M.</strong><small>Office manager · Sample testimonial</small></span></div>
+          </div>
+          <div className="testimonial-aside"><span>✳</span><p>Good work happens in spaces that feel cared for.</p></div>
+        </section>
 
-        <ul
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 'var(--space-2)',
-            listStyle: 'none',
-            padding: 0,
-            fontSize: 'var(--font-size-sm)',
-          }}
-        >
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>docs/demo-runbook.md</code> &mdash; Step-by-step audit execution
-          </li>
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>docs/troubleshooting.md</code> &mdash; 25+ diagnosed tracking errors
-          </li>
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>docs/defect-catalog.md</code> &mdash; Real-world root cause analysis
-          </li>
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>docs/google-ads-boundary.md</code> &mdash; Epistemic boundaries &amp; ads rules
-          </li>
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>scope/audit-scope-source.md</code> &mdash; Canonical $350 service scope
-          </li>
-          <li style={{ color: 'var(--color-text-secondary)' }}>
-            &bull; <code>audit-template/sample-audit-report.md</code> &mdash; Client-ready deliverable
-          </li>
-        </ul>
-      </div>
-    </section>
+        <section className="consultation-section" id="consultation" aria-labelledby="consultation-title">
+          <div className="consultation-inner section-wrap">
+            <div className="consultation-copy">
+              <p className="eyebrow eyebrow--light"><span /> Start with a conversation</p>
+              <h2 id="consultation-title">Let’s make room<br />for <em>better days.</em></h2>
+              <p>Tell us a little about your workplace. We’ll follow up to understand what would make a difference for your team.</p>
+              <div className="contact-note"><span aria-hidden="true">↗</span><span>Friendly, no-pressure conversations.<br />A plan that starts with what you need.</span></div>
+            </div>
+            <div className="lead-form-card"><BusinessLeadForm /></div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="alder-footer">
+        <a className="alder-brand alder-brand--footer" href="#top" aria-label="Alder Office Services, back to top">
+          <span className="alder-brand__mark" aria-hidden="true"><i /><i /><i /></span>
+          <span className="alder-brand__text">alder<span>office services</span></span>
+        </a>
+        <p>Thoughtful care for the places where good work happens.</p>
+        <div className="alder-footer__links"><a href="#services">Services</a><a href="#consultation">Get in touch</a><a href="/audit">Verification details <span aria-hidden="true">↗</span></a></div>
+        <small>© 2026 Alder Office Services <span>Fictional business · portfolio sample</span></small>
+      </footer>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ Single most important teaching outcome: **a form that works does not mean conver
 - `demo/`: Next.js App Router application with intentional tracking defects, simulated CRM, and observability.
 - `docs/`: Comprehensive documentation and runbooks.
 - `evidence/`: Finding packages and audit evidence.
-- `gtm/`: Dedicated non-production GTM container export and import notes.
+- `gtm/`: GTM import template and notes. The known container is currently empty; the template has not been imported or published.
 
 ## Commands
 Run all commands from the repository root:
@@ -32,7 +32,7 @@ npm run scan:pii
 # Check documentation command validity
 npm run check:docs
 
-# Local automated verification pipeline (Layer 1: lint, typecheck, unit, build, e2e, scan, docs)
-# Note: GTM Preview, GA4 DebugView, and screenshots are verified manually. Google Ads was not tested.
+# Full local verification pipeline. E2E coverage resets the local CRM store; back up its contents first.
+# GTM Preview, GA4 DebugView, and live Google Ads have not been verified.
 npm run verify
 ```

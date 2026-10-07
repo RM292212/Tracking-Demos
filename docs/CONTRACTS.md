@@ -1,8 +1,8 @@
 # ResponseLock Interface Contracts & Architectural Invariants
 
-**Status**: FROZEN (Wave 0)  
-**Location**: `demo/src/lib/contracts/`  
-**Last Updated**: 2026-09-18  
+**Status**: Legacy contract frozen; V2 analytics contract is additive
+**Location**: `demo/src/lib/contracts/`
+**Last Updated**: 2026-09-18
 
 ---
 
@@ -48,7 +48,23 @@ To ensure all parallel sub-agents (Wave 1 baseline, defects 1-6, CRM viewer, obs
   6. `attribution_status` (`'present' | 'partial' | 'missing' | 'dropped'`)
   7. `debug_mode` (`true`)
 
-### 3.2 Baseline Conversion Chain (Enforced Order)
+### 3.2 Alder V2 Analytics Contract (Additive)
+
+The V2 Alder flow uses helpers in `demo/src/lib/v2-events.ts`; it does not change the frozen seven-key legacy builder above. Its successful event has exactly fourteen fields: `event`, `form_id`, `lead_type`, `scenario`, `submission_id`, `attribution_status`, `debug_mode`, `timestamp`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, and `gclid`.
+
+- `event`: exactly `demo_lead_success`
+- `form_id`: exactly `alder_consultation`
+- `lead_type`: exactly `consultation`
+- `scenario`: exactly `baseline`
+- `submission_id`: UUID returned by the local API and matching the request
+- `attribution_status`: `present`, `partial`, `missing`, or `dropped`
+- `debug_mode`: `true`; `timestamp`: ISO date-time from the confirmed receipt
+- The six allowlisted attribution values are sanitized and empty strings when absent. Names, email addresses, phone numbers, free text, raw URLs, and other attribution keys are excluded.
+- The event is pushed only after a Zod-valid success receipt matches both the request ID and the baseline scenario. A session-scoped ID guard prevents duplicate pushes after replay. Until the request is confirmed or canceled, the full pending request (including form values) is kept in that tab's `sessionStorage` so refresh and retry reuse the original payload and idempotency key. The pending record is cleared on success or start-over; it is separate from the PII-free dataLayer event.
+
+The GTM import template filters on the exact event, Alder form ID, lead type, and a UUID-shaped submission ID. It excludes legacy lab events and the intentionally broken Alder mini-form event. GTM import and downstream event delivery remain unverified.
+
+### 3.3 Legacy Baseline Conversion Chain
 1. User completes form controls.
 2. Client validation executes.
 3. Client generates `submission_id` (UUID v4).
@@ -58,9 +74,9 @@ To ensure all parallel sub-agents (Wave 1 baseline, defects 1-6, CRM viewer, obs
 7. Exactly 1 record written to `demo/data/crm-records.jsonl`.
 8. Success UI renders from the 201 server response.
 9. Exactly 1 `demo_lead_success` event pushed to `window.dataLayer`.
-10. Observability timeline shows full sequence.
+10. The success UI reflects the validated server receipt and the canonical event is pushed to `window.dataLayer`. The legacy observability timeline is not a complete trace of this form flow; do not use it as proof that each request or event occurred.
 
-### 3.3 Invalid Form Rejection Invariant
+### 3.4 Legacy Invalid Form Rejection Invariant
 When validation fails on an invalid form:
 - Inline field errors render.
 - Zero network requests are dispatched (0 calls to `/api/leads`).

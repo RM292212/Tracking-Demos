@@ -1,8 +1,8 @@
 # ResponseLock Environment & Host Specification
 
-**Status**: AUTHORITATIVE ENVIRONMENT CONTRACT  
-**Host Target**: Windows 11 with PowerShell 5.1  
-**Runtime**: Node.js v24.18.0 (LTS) & npm 11.16.0  
+**Status**: Local environment reference; service access is pending
+**Host Target**: Windows 11 with PowerShell 5.1
+**Runtime**: Node.js v24.18.0 (LTS) & npm 11.16.0
 **Workspace Root**: `C:\Users\Ranji\code-base\RL-Demo`  
 **Commercial Context**: ResponseLock $350 Fixed-Scope Lead & Conversion Integrity Audit  
 
@@ -10,7 +10,7 @@
 
 ## 1. Environment Baseline & Detected System Specs
 
-The ResponseLock Conversion-Integrity Demo Workspace is built and verified on a standardized development environment.
+The local workspace uses the host/runtime values below. This reference does not establish external GTM or GA4 access, event receipt, or publication status.
 
 | Component | Authoritative Specification | Detection / Verification Command |
 |---|---|---|
@@ -20,8 +20,8 @@ The ResponseLock Conversion-Integrity Demo Workspace is built and verified on a 
 | **Package Manager** | npm 11.16.0 (Single authoritative package manager) | `npm -v` |
 | **Version Control** | Git 2.55.0 (Local repository only; no remote push) | `git --version` |
 | **Default Port** | TCP Port 3000 (IPv4 binding: `127.0.0.1`) | `Get-NetTCPConnection -LocalPort 3000` |
-| **GTM Container ID** | `GTM-KRH5W5MX` (Dedicated non-production test container) | Read via `src/lib/env.ts` from `.env.local` |
-| **GA4 Measurement ID** | `G-GQBPF316M0` (Dedicated non-production test property) | Read via `src/lib/env.ts` from `.env.local` |
+| **GTM Container ID** | `GTM-KRH5W5MX` (known empty container; account access pending) | Read via `src/lib/env.ts` from `.env.local` |
+| **GA4 Measurement ID** | `G-GQBPF316M0` (configured ID; property access pending) | Read via `src/lib/env.ts` from `.env.local` |
 
 ---
 

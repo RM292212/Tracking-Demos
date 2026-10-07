@@ -1,31 +1,31 @@
 {
   "exportFormatVersion": 2,
-  "exportTime": "2026-09-18 18:30:00",
+  "exportTime": "2026-10-08 00:00:00",
   "containerVersion": {
-    "path": "accounts/100001/containers/200001/versions/0",
-    "accountId": "100001",
-    "containerId": "200001",
+    "path": "accounts/0/containers/0/versions/0",
+    "accountId": "0",
+    "containerId": "0",
     "containerVersionId": "0",
-    "name": "ResponseLock Conversion Integrity Demo",
-    "notes": "Exported container configuration for ResponseLock Week-1 Conversion-Integrity Demo Workspace.",
+    "name": "Alder V2 import template - unpublished",
+    "notes": "Template for local training. Metadata IDs are placeholders. Import into a dedicated non-production workspace and review before publishing.",
     "container": {
-      "path": "accounts/100001/containers/200001",
-      "accountId": "100001",
-      "containerId": "200001",
-      "name": "ResponseLock Demo Container",
-      "publicId": "GTM-DEMO001",
+      "path": "accounts/0/containers/0",
+      "accountId": "0",
+      "containerId": "0",
+      "name": "Alder V2 template target",
+      "publicId": "GTM-KRH5W5MX",
       "usageContext": [
         "WEB"
       ],
-      "fingerprint": "1726682400000",
-      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/100001/containers/200001/workspaces"
+      "fingerprint": "0",
+      "tagManagerUrl": "https://tagmanager.google.com/"
     },
     "tag": [
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "tagId": "1",
-        "name": "Google Tag - GA4 Configuration",
+        "name": "Google Tag - GA4",
         "type": "googtag",
         "parameter": [
           {
@@ -56,13 +56,14 @@
           }
         ],
         "firingTriggerId": [
-          "11"
+          "20"
         ],
-        "tagFiringOption": "ONCE_PER_EVENT"
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "paused": true
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "tagId": "2",
         "name": "GA4 Event - demo_lead_success",
         "type": "gaawe",
@@ -81,21 +82,6 @@
             "type": "LIST",
             "key": "eventParameters",
             "list": [
-              {
-                "type": "MAP",
-                "map": [
-                  {
-                    "type": "TEMPLATE",
-                    "key": "name",
-                    "value": "submission_id"
-                  },
-                  {
-                    "type": "TEMPLATE",
-                    "key": "value",
-                    "value": "{{dlv - submission_id}}"
-                  }
-                ]
-              },
               {
                 "type": "MAP",
                 "map": [
@@ -132,12 +118,12 @@
                   {
                     "type": "TEMPLATE",
                     "key": "name",
-                    "value": "scenario"
+                    "value": "submission_id"
                   },
                   {
                     "type": "TEMPLATE",
                     "key": "value",
-                    "value": "{{dlv - scenario}}"
+                    "value": "{{dlv - submission_id}}"
                   }
                 ]
               },
@@ -162,6 +148,111 @@
                   {
                     "type": "TEMPLATE",
                     "key": "name",
+                    "value": "utm_source"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - utm_source}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "utm_medium"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - utm_medium}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "utm_campaign"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - utm_campaign}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "utm_term"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - utm_term}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "utm_content"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - utm_content}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "gclid"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - gclid}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
+                    "value": "timestamp"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "value",
+                    "value": "{{dlv - timestamp}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "name",
                     "value": "debug_mode"
                   },
                   {
@@ -177,13 +268,56 @@
         "firingTriggerId": [
           "10"
         ],
-        "tagFiringOption": "ONCE_PER_EVENT"
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "paused": true
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "3",
+        "name": "Google Ads - Conversion Linker (paused template)",
+        "type": "gclidw",
+        "parameter": [],
+        "firingTriggerId": [
+          "20"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "paused": true
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "4",
+        "name": "Google Ads - Lead Conversion (paused template)",
+        "type": "awct",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "conversionId",
+            "value": "REPLACE_WITH_REAL_GOOGLE_ADS_CONVERSION_ID"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "conversionLabel",
+            "value": "REPLACE_WITH_REAL_GOOGLE_ADS_CONVERSION_LABEL"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "transactionId",
+            "value": "{{dlv - submission_id}}"
+          }
+        ],
+        "firingTriggerId": [
+          "10"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "paused": true
       }
     ],
     "trigger": [
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "triggerId": "10",
         "name": "CE - demo_lead_success",
         "type": "CUSTOM_EVENT",
@@ -202,60 +336,81 @@
                 "value": "demo_lead_success"
               }
             ]
+          },
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{dlv - form_id}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "alder_consultation"
+              }
+            ]
+          },
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{dlv - lead_type}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "consultation"
+              }
+            ]
+          },
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{dlv - submission_id}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              }
+            ]
           }
         ]
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "triggerId": "11",
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "20",
         "name": "All Pages",
         "type": "PAGEVIEW"
       }
     ],
     "variable": [
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "1",
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "100",
         "name": "const - ga4_measurement_id",
         "type": "c",
         "parameter": [
           {
             "type": "TEMPLATE",
             "key": "value",
-            "value": "G-DEMO000001"
+            "value": "G-XXXXXXXXXX"
           }
         ]
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "2",
-        "name": "dlv - submission_id",
-        "type": "v",
-        "parameter": [
-          {
-            "type": "INTEGER",
-            "key": "dataLayerVersion",
-            "value": "2"
-          },
-          {
-            "type": "BOOLEAN",
-            "key": "setDefaultValue",
-            "value": "false"
-          },
-          {
-            "type": "TEMPLATE",
-            "key": "name",
-            "value": "submission_id"
-          }
-        ]
-      },
-      {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "3",
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "1",
         "name": "dlv - form_id",
         "type": "v",
         "parameter": [
@@ -277,9 +432,9 @@
         ]
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "4",
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "2",
         "name": "dlv - lead_type",
         "type": "v",
         "parameter": [
@@ -301,10 +456,10 @@
         ]
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "5",
-        "name": "dlv - scenario",
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "3",
+        "name": "dlv - submission_id",
         "type": "v",
         "parameter": [
           {
@@ -320,14 +475,14 @@
           {
             "type": "TEMPLATE",
             "key": "name",
-            "value": "scenario"
+            "value": "submission_id"
           }
         ]
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
-        "variableId": "6",
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "4",
         "name": "dlv - attribution_status",
         "type": "v",
         "parameter": [
@@ -347,29 +502,221 @@
             "value": "attribution_status"
           }
         ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "5",
+        "name": "dlv - utm_source",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "utm_source"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "6",
+        "name": "dlv - utm_medium",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "utm_medium"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "7",
+        "name": "dlv - utm_campaign",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "utm_campaign"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "8",
+        "name": "dlv - utm_term",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "utm_term"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "9",
+        "name": "dlv - utm_content",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "utm_content"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "10",
+        "name": "dlv - gclid",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "gclid"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "11",
+        "name": "dlv - timestamp",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "timestamp"
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "12",
+        "name": "dlv - debug_mode",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "debug_mode"
+          }
+        ]
       }
     ],
     "builtInVariable": [
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "type": "PAGE_URL",
         "name": "Page URL"
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "type": "PAGE_PATH",
         "name": "Page Path"
       },
       {
-        "accountId": "100001",
-        "containerId": "200001",
+        "accountId": "0",
+        "containerId": "0",
         "type": "EVENT",
         "name": "Event"
       }
     ],
-    "fingerprint": "1726682400000",
-    "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/100001/containers/200001/versions/0"
+    "fingerprint": "0",
+    "tagManagerUrl": "https://tagmanager.google.com/"
   }
 }

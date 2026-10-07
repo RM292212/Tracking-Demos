@@ -1,70 +1,34 @@
-# ResponseLock Week-1 Workspace — Build & Verification Status
+# Workspace status
 
-**Last Updated:** 2026-09-19  
-**Branch:** `build/conversion-integrity-demo`  
-**Overall Status:** Local implementation complete. Automated local verification passed. GTM Preview, GA4 DebugView, screenshots, and final evidence records require manual verification. Google Ads was not tested.
+**Updated:** 2026-10-08
 
----
+The original ResponseLock lab and its intentional defect scenarios remain in the repository. The Alder V2 flow is additive. Unit, E2E, type, lint, documentation, PII, production-build, and production-browser checks are complete. These results verify the local demo flow only, not a complete external conversion pipeline.
 
-## 1. Authoritative Four-Layer Verification Status
+## Local verification
 
-### Layer 1: Confirmed Locally
-- **Baseline conversion chain:** Intact 12-step sequence verified (client validation, deterministic UUID, server 201 response, CRM row creation, single `demo_lead_success` dataLayer event with approved keys).
-- **Baseline invalid rejection:** Verified zero network requests, zero CRM rows, zero dataLayer events on invalid submit.
-- **Defect 1 (Conversion fires on invalid submit):** Verified false conversion event dispatched to dataLayer with 0 API requests and 0 CRM rows.
-- **Defect 2 (Duplicate conversion):** Verified 2 dataLayer conversion events sharing the identical `submission_id` with exactly 1 CRM row (mutex + idempotency deduplication).
-- **Defect 3 (Missing conversion typo):** Verified `LEGACY_MISSPELLED_EVENT` (`demo_lead_sucess`) dispatched to dataLayer; zero canonical `demo_lead_success` events.
-- **Defect 4 (Schema drift):** Verified mutated dataLayer payload with undefined `form_id` and mutated `lead_type: 'contact'`; UI diff viewer rendered.
-- **Defect 5 (Attribution lost across SPA navigation):** Verified client attribution dropped to `direct / none` (`attribution_status: 'dropped'`) upon Step 2 router navigation.
-- **Defect 6 (CRM mapping incomplete):** Verified client dataLayer has complete attribution, but server CRM row drops `campaign_name` and mis-maps `lead_source_detail` to `google`.
-- **Local CRM persistence:** Verified atomic JSONL append-only storage with `AsyncMutex` and idempotency deduplication.
-- **Automated test suites:** 14 unit/integration test suites (135 tests passing) and 10 E2E spec suites (32 tests passing).
-- **Static validation:** `npm run typecheck` (0 errors), `npm run lint` (0 warnings), `npm run build` (16 pages generated).
-- **Security & Privacy:** `npm run scan:pii` clean (zero real personal data or live credentials).
-- **Documentation validation:** `npm run check:docs` (61 commands verified against `package.json`).
+- Unit tests: **149/149 passed** across 17 files.
+- Focused V2/observability E2E: **9/9 passed** (5 V2 tests plus 4 observability tests).
+- Full E2E suite: **37/37 passed** in approximately two minutes, including all 5 new V2 tests and all 32 legacy tests.
+- E2E was run against Playwright's development server; the production build was reviewed separately. Stop any server occupying port 3000 before rerunning E2E because Playwright reuses an existing server and the production app rejects the test-only `/api/dev/reset` endpoint.
+- TypeScript typecheck: passed.
+- ESLint: passed with **0 errors** and **14 warnings**.
+- Documentation command checks: **52 passed**.
+- PII scan: passed.
+- Production build: passed; all 17 routes compiled. Four pre-existing unused-variable build warnings remain.
+- Production-browser review: passed on desktop at 1440px and 1280px and mobile at 390px, with no horizontal overflow. A fresh production tab had no console errors or warnings.
+- Native desktop recordings are not public-ready: the first 35:29 capture has a DPI-scaled crop, and other native captures include unrelated foreground-app switches.
+- Browser-only visual evidence: `C:\Users\Ranji\.codex\visualizations\2026\10\07\01a11787-06dd-78d1-bdc6-9b49754eab43\qa-browser-repair.webm` is a 14.20-second VP8 assembly of real timestamped browser screenshots. `C:\Users\Ranji\.codex\visualizations\2026\10\07\01a11787-06dd-78d1-bdc6-9b49754eab43\upwork-repair-proof-10s.webm` is the exact 10.00-second, silent, 1425×891, 5 fps excerpt using 50 real browser screenshots from the 1–11 second range. These are screenshot-frame assemblies, not continuous recordings or evidence of platform receipt.
 
-### Layer 2: Requires Manual GTM Verification
-- **Test Container Import:** Verification of `gtm/responselock-demo-container.json` import into dedicated test container (`GTM-KRH5W5MX`) in an isolated workspace.
-- **Trigger Receipt:** Tag Assistant confirmation of custom event trigger matching `demo_lead_success`.
-- **Event-Tag Firing Count:** Tag Assistant confirmation that `GA4 Event - demo_lead_success` fires once on baseline, twice on Defect 2, and zero times on Defect 3.
-- **Variable Resolution:** Tag Assistant variable inspection of `dlv - submission_id`, `dlv - form_id`, `dlv - lead_type`, `dlv - scenario`, `dlv - attribution_status`.
-- **Consent-State Behavior:** Observation of Tag Assistant consent tab showing `analytics_storage: 'denied'` initially, updating to `'granted'` upon user consent.
+The full E2E run may reset local CRM data. A pre-test backup is available at `C:\Users\Ranji\.codex\visualizations\2026\10\07\01a11787-06dd-78d1-bdc6-9b49754eab43\crm-before-v2-tests.jsonl`; final cleanup restored the original six CRM rows from that backup. Production-browser review verified the Alder attribution route, validation-before-confirmation, successful local API and CRM persistence, one canonical event, duplicate replay suppression, and suppression after refresh. The intentionally broken audit example emitted an excluded diagnostic event without creating a CRM record; the corrected blank form emitted no canonical event or CRM record. The legacy Defect 5 attribution-loss check was done in a development browser, not the production-browser review. Local checks establish local behavior only; they do not establish external tag delivery.
 
-### Layer 3: Requires Manual GA4 Verification
-- **DebugView Event Receipt:** Real-time event ingestion of `demo_lead_success` in Google Analytics 4 property `G-GQBPF316M0` DebugView console.
-- **Event Count & Parameter Values:** Observation that event parameters (`form_id`, `lead_type`, `scenario`, `submission_id`, `attribution_status`, `debug_mode`) match expected values.
-- **Consent Impact:** Observation of event presence/absence under accepted vs. denied analytics consent states.
-- **Key Event Status:** Confirmation of `demo_lead_success` marked as Key Event in GA4 property settings.
+## External-service status
 
-### Layer 4: Not Tested
-- **Google Ads Conversion Import:** Import of GA4 Key Events into Google Ads is conceptual and was not tested.
-- **Primary vs. Secondary Status:** Bidding goal designation was not tested.
-- **Campaign Goal Inclusion:** Attribution to live ad campaigns was not tested.
-- **Smart Bidding Effect:** Algorithmic bidding optimization and performance impact were not tested.
-- **Advertising Performance Outcomes:** No live ad spend, traffic, or real conversion actions occurred.
+- GTM container `GTM-KRH5W5MX`: account sign-in is unavailable. The live container script responds, but the container currently has no tags, triggers, or rules. No Preview session, import, or publication has been verified.
+- `gtm/responselock-demo-container.json`: a four-tag import template with two triggers and thirteen variables. All tags are paused. The GA4 measurement value is a placeholder; Ads conversion ID and label are replacement placeholders. Google Ads tags and Conversion Linker must remain paused until real account details and configuration are reviewed. Import acceptance has not been verified in GTM.
+- GA4 measurement ID `G-GQBPF316M0`: configured locally; property access is pending. Event receipt and Key Event status are unverified.
+- Google Ads: no conversion action ID or label is configured; no conversion has been sent or tested.
+- Meta Pixel, Conversions API, and Enhanced Conversions: no implementation is included.
 
----
+The GTM script loaded during browser review, but its live container remains empty. No GTM Preview, GA4 DebugView, published-container, live Ads, or external conversion result is established by local tests or build output.
 
-## 2. Automated Verification Pipeline Results
-
-| Command | Working Directory | Target | Status |
-|---|---|---|---|
-| `npm run typecheck` | Workspace Root | TypeScript 5.7.3 strict compilation | ✅ Pass (0 errors) |
-| `npm run lint` | Workspace Root | ESLint Next.js rules | ✅ Pass (0 warnings) |
-| `npm run test:unit` | Workspace Root | Vitest (14 suites, 135 tests) | ✅ Pass (135 passed) |
-| `npm run test:e2e` | Workspace Root | Playwright (10 spec files, 32 tests) | ✅ Pass (32 passed) |
-| `npm run build` | Workspace Root | Next.js 15.5 production bundle | ✅ Pass (16 pages) |
-| `npm run scan:pii` | Workspace Root | PII and tracking identifier scanner | ✅ Pass (Zero real PII) |
-| `npm run check:docs` | Workspace Root | Shell command validator | ✅ Pass (61 commands verified) |
-| `npm run emit:matrix` | Workspace Root | Dynamic matrix generator | ✅ Pass (8/8 scenarios verified locally) |
-| `npm run verify` | Workspace Root | Full local CI chain | ✅ Pass (All 8 gates passed) |
-
----
-
-## 3. Immediate Operator Next Actions
-
-1. Confirm dedicated test GTM ID (`GTM-KRH5W5MX`) and GA4 ID (`G-GQBPF316M0`) in `demo/.env.local`.
-2. Follow `docs/final-manual-verification-runbook.md` to import GTM container into a new workspace and review before previewing.
-3. Accept the Consent Mode v2 banner in the browser (`http://localhost:3000`) before validating GA4 event delivery.
-4. Step through baseline and Defects 1–6 in Tag Assistant and GA4 DebugView, capturing required screenshots.
-5. Practice plain-language client explanations using `docs/client-explanation-scripts.md`.
+The screenshot assembler is `C:\Users\Ranji\.codex\visualizations\2026\10\07\01a11787-06dd-78d1-bdc6-9b49754eab43\v2-browser-capture\assemble-browser-capture.ps1`. It samples actual browser screenshots against their manifest timestamps and repeats only captured frames; no synthetic frames or labels are added.

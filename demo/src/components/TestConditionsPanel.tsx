@@ -1,16 +1,11 @@
 'use client';
 
 /**
- * ResponseLock Test Conditions Simulation Panel
+ * ResponseLock Planned Test Conditions Panel
  * Location: demo/src/components/TestConditionsPanel.tsx
  *
- * Provides toggleable simulation controls (off by default) for:
- * 1. Ad-blocker simulation (skips GTM injection + shows diagnostic notice)
- * 2. API 500 error injection
- * 3. API timeout simulation
- * 4. Slow network simulation (2s artificial delay)
- * 5. Consent denied simulation
- * 6. SPA navigation mode toggle
+ * Records planned fault-control settings in local demo state. These settings
+ * are not connected to API, network, consent, routing, or GTM behavior.
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -60,37 +55,37 @@ const CONDITIONS_META: ConditionMeta[] = [
   {
     key: 'adBlocker',
     title: 'Ad-Blocker Simulation',
-    description: 'Suppresses GTM container execution and simulates client-side script blocking.',
+    description: 'Records the planned ad-blocker setting only; it does not suppress GTM or block script requests.',
     badge: 'Network / Tagging',
   },
   {
     key: 'api500',
     title: 'API 500 Error Injection',
-    description: 'Forces lead submission endpoint (/api/leads) to return HTTP 500 Internal Server Error.',
+    description: 'Records the planned HTTP 500 setting only; it does not change /api/leads responses.',
     badge: 'Backend Error',
   },
   {
     key: 'apiTimeout',
     title: 'API Timeout Simulation',
-    description: 'Simulates connection abort or server hang (aborts after 8 seconds).',
+    description: 'Records the planned timeout setting only; it does not abort or delay requests.',
     badge: 'Latency / Hang',
   },
   {
     key: 'slowNetwork',
     title: 'Slow Network Simulation',
-    description: 'Injects an artificial 2000ms delay into API requests to test loading states.',
+    description: 'Records the planned slow-network setting only; it does not change request timing.',
     badge: 'Latency (+2000ms)',
   },
   {
     key: 'consentDenied',
     title: 'Consent Denied Simulation',
-    description: 'Enforces Consent Mode v2 denial state regardless of user interaction.',
+    description: 'Records the planned consent-denied setting only; it does not update Consent Mode.',
     badge: 'Privacy / Consent',
   },
   {
     key: 'spaNavigation',
     title: 'SPA Navigation Mode Toggle',
-    description: 'Simulates client-side route transitions (Next.js router) vs standard page loads.',
+    description: 'Records the planned navigation setting only; it does not alter route transitions.',
     badge: 'Routing / Router',
   },
 ];
@@ -218,6 +213,7 @@ export function TestConditionsPanel({
             }}
           >
             <span>Environment Simulators</span>
+            <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-warning-text)' }}>Planned controls · settings only</span>
             <span
               style={{
                 fontSize: 'var(--font-size-xs)',
@@ -233,7 +229,7 @@ export function TestConditionsPanel({
             </span>
           </h2>
           <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
-            Toggle environmental faults and network degradation (off by default)
+            These toggles record planned fault settings only; they are not wired to requests, consent, routing, or GTM.
           </p>
         </div>
 
@@ -273,8 +269,8 @@ export function TestConditionsPanel({
             lineHeight: 'var(--line-height-normal)',
           }}
         >
-          <strong>Diagnostic Notice:</strong> Ad-blocker simulation is ACTIVE. GTM script injection is suppressed,
-          third-party analytics beacons are dropped, and client-side Google tags will fail to load.
+          <strong>Planned setting recorded:</strong> Ad-blocker scenario is selected. This local setting does not suppress GTM,
+          block requests, or change tag behavior.
         </aside>
       )}
 
@@ -359,6 +355,10 @@ export function TestConditionsPanel({
           );
         })}
       </div>
+
+      <p className="test-conditions-disclaimer" role="note" style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-border-subtle)', paddingTop: 'var(--space-2)' }}>
+        Planned fault controls only: changing a toggle records a local demo setting and timeline entry. It does not inject HTTP errors, abort or delay requests, alter navigation or consent, or affect GTM loading.
+      </p>
     </div>
   );
 }

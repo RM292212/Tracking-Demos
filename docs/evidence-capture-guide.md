@@ -163,9 +163,10 @@ tail -n 1 demo/data/crm-records.jsonl
 
 ## 7. Observability Timeline & Manifest Extraction
 
-The on-page Observability Panel records every micro-event across the conversion lifecycle.
+The on-page Observability Panel displays diagnostic events from instrumented parts of the app. It is not a complete request or conversion trace, and absence of an entry does not show that a request or event did not occur. Verify network activity in browser DevTools and canonical events in `window.dataLayer` independently.
 
 ### 7.1 Timeline Event Categories
+These are schema categories. A route may emit only some of them; do not assume the timeline records every operation.
 - **`lifecycle`**: Component mounting, route transitions, step navigation.
 - **`validation`**: Client-side form validation checks and errors.
 - **`network`**: API requests, headers, and HTTP status codes.

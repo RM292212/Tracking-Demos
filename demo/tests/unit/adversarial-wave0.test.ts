@@ -65,14 +65,19 @@ describe('Wave 0 Empirical Adversarial Stress Test Suite', () => {
       // Verify atomic JSON parsing on every line
       const parsedIds: string[] = [];
       for (const [index, line] of rawLines.entries()) {
-        let parsed: any;
+        let parsed: unknown;
         try {
           parsed = JSON.parse(line);
         } catch (e) {
           throw new Error(`Line ${index + 1} corrupted or interleaved: "${line}"`);
         }
-        expect(parsed).toHaveProperty('submission_id');
-        expect(parsed).toHaveProperty('full_name');
+        if (
+          typeof parsed !== 'object' || parsed === null ||
+          !('submission_id' in parsed) || typeof parsed.submission_id !== 'string' ||
+          !('full_name' in parsed) || typeof parsed.full_name !== 'string'
+        ) {
+          throw new Error(`Line ${index + 1} is missing a string submission_id or full_name.`);
+        }
         expect(parsed.full_name).toMatch(/^Stress User \d+$/);
         parsedIds.push(parsed.submission_id);
       }
@@ -172,15 +177,20 @@ describe('Wave 0 Empirical Adversarial Stress Test Suite', () => {
       },
     };
 
-    const makeRequest = (body: any, headers: Record<string, string> = {}) => {
+    const makeRequest = (body: unknown, headers: Record<string, string> = {}) => {
+      const submissionId =
+        typeof body === 'object' && body !== null &&
+        'submission_id' in body && typeof body.submission_id === 'string'
+          ? body.submission_id
+          : '';
       return new Request('http://localhost:3000/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Idempotency-Key': body?.submission_id || '',
+          'Idempotency-Key': submissionId,
           ...headers,
         },
-        body: typeof body === 'string' ? body : JSON.stringify(body),
+        body: typeof body === 'string' ? body : JSON.stringify(body) ?? 'null',
       });
     };
 

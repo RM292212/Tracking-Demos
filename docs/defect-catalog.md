@@ -4,6 +4,8 @@
 **Scope**: Authoritative reference catalog for the 6 production tracking defects demonstrated in ResponseLock  
 **Associated Service**: ResponseLock Conversion-Integrity Audit ($350 fixed-scope audit)  
 
+> These six defects describe the preserved legacy ResponseLock lab. Their local behavior is distinct from external GTM/GA4 behavior, which is unverified. Downstream outcomes below are conditional examples for a corresponding legacy GTM setup. The Alder V2 GTM import template is scoped to `form_id=alder_consultation` and `lead_type=consultation`; it intentionally filters out legacy-lab events. Do not use that template to infer what the legacy defects would send to GTM or GA4.
+
 ---
 
 ## 1. Overview & Classification Matrix
@@ -72,7 +74,7 @@ When a user submits a valid lead, both listeners fire within 500ms of each other
 
 #### Detection Signature
 1. **Console / dataLayer**: Exactly **2** `demo_lead_success` events pushed to `window.dataLayer` with identical `submission_id` UUIDs.
-2. **Tag Assistant**: Google Tag Assistant indicates that the GA4 event tag (`GA4 Event - demo_lead_success`) fired twice for a single submission (Google Ads conversion actions are bounded as conceptual-only).
+2. **External verification**: GTM Preview and GA4 receipt for the legacy defect have not been verified. The V2 import template excludes legacy-form events, so its firing state does not demonstrate this legacy defect downstream.
 3. **Network Tab**: Exactly **1** successful network request to `/api/leads`.
 4. **CRM Database**: Exactly **1** unique record stored in `demo/data/crm-records.jsonl`.
 

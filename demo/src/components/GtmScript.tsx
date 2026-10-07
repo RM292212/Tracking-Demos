@@ -12,8 +12,8 @@
  *
  * INVARIANTS:
  * - Uses next/script with strategy="afterInteractive".
- * - React Strict Mode double-injection prevention via module guard & Next.js script deduplication.
- * - Consent Mode v2 default denial executed BEFORE GTM script loads.
+ * - Next.js script deduplication prevents duplicate container snippet insertion.
+ * - Saved Consent Mode v2 choice is restored before GTM; absent storage defaults to denial.
  * - NO separate gtag.js or GA4 script tag (GA4 tags are managed exclusively inside GTM).
  * - Graceful fallback when GTM ID is absent or invalid.
  */
@@ -21,12 +21,6 @@
 import React from 'react';
 import Script from 'next/script';
 import { env } from '@/lib/env';
-
-/**
- * Module-level injection guard to ensure GTM is only initialized once
- * even when React Strict Mode mounts components twice in development.
- */
-let isGtmInitialized = false;
 
 export function GtmScript(): React.ReactElement | null {
   // If absent, render nothing (simulated offline mode)
@@ -44,15 +38,20 @@ export function GtmScript(): React.ReactElement | null {
   // Inline snippet executed before GTM container loads:
   // 1. Initialize dataLayer
   // 2. Define gtag helper
-  // 3. Set Consent Mode v2 default denial (all denied with wait_for_update: 500)
+  // 3. Restore a saved consent choice, otherwise set the explicit default denial.
   const consentAndDataLayerInit = `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    var rlConsentChoice = 'denied';
+    try {
+      var rlStoredConsent = window.localStorage.getItem('responselock_consent_choice');
+      if (rlStoredConsent === 'granted' || rlStoredConsent === 'denied') rlConsentChoice = rlStoredConsent;
+    } catch (e) {}
     gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'analytics_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
+      'ad_storage': rlConsentChoice,
+      'analytics_storage': rlConsentChoice,
+      'ad_user_data': rlConsentChoice,
+      'ad_personalization': rlConsentChoice,
       'wait_for_update': 500
     });
   `;
@@ -62,14 +61,17 @@ export function GtmScript(): React.ReactElement | null {
   const gtmSnippet = `
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.id='gtm-external-container';j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    j.onload=function(){j.dataset.loadState='loaded';w.dispatchEvent(new CustomEvent('responselock:gtm-load',{detail:{status:'loaded'}}));};
+    j.onerror=function(){j.dataset.loadState='failed';w.dispatchEvent(new CustomEvent('responselock:gtm-load',{detail:{status:'failed'}}));};
+    f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','${containerId}');
   `;
 
   return (
     <>
-      {/* 1. Consent Mode v2 default denial (must run synchronously before GTM snippet) */}
+      {/* 1. Consent choice restore/default denial runs synchronously before the GTM snippet */}
       <script
         id="google-consent-mode-init"
         dangerouslySetInnerHTML={{ __html: consentAndDataLayerInit }}
@@ -79,9 +81,6 @@ export function GtmScript(): React.ReactElement | null {
       <Script
         id="gtm-container-script"
         strategy="afterInteractive"
-        onLoad={() => {
-          isGtmInitialized = true;
-        }}
         dangerouslySetInnerHTML={{ __html: gtmSnippet }}
       />
 

@@ -80,7 +80,12 @@ export function ConsentBanner({
   // Initialize consent status from storage
   useEffect(() => {
     setHasMounted(true);
-    const stored = localStorage.getItem(CONSENT_STORAGE_KEY) as ConsentStatus | null;
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+    } catch {
+      // Restricted browser storage starts from the explicit default-denied state.
+    }
     if (stored === 'granted' || stored === 'denied') {
       setCurrentStatus(stored);
       setIsBannerVisible(false);
@@ -282,7 +287,7 @@ export function ConsentBanner({
                   gap: '8px',
                 }}
               >
-                <span>Google Consent Mode v2 (Educational Simulation)</span>
+                <span>Consent preferences (Google Consent Mode v2)</span>
                 <span
                   style={{
                     fontSize: '0.65rem',
@@ -294,7 +299,7 @@ export function ConsentBanner({
                     borderRadius: 'var(--radius-sm)',
                   }}
                 >
-                  EU Privacy Compliance
+                  Default denied
                 </span>
               </h3>
 
@@ -324,7 +329,7 @@ export function ConsentBanner({
                 lineHeight: 'var(--line-height-normal)',
               }}
             >
-              By default, ResponseLock pre-sets all 4 Consent Mode v2 categories (<code>ad_storage</code>,{' '}
+              This demo starts with all 4 Consent Mode v2 categories (<code>ad_storage</code>,{' '}
               <code>analytics_storage</code>, <code>ad_user_data</code>, <code>ad_personalization</code>) to{' '}
               <strong>denied</strong> before GTM loads. Choose below to test how GTM and GA4 tags adapt to grant or
               denial updates in real time.

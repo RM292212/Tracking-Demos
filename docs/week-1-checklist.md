@@ -1,5 +1,7 @@
 # ResponseLock Week-1 Milestone & Delivery Checklist
 
+> Historical checklist of the original project requirements and milestones. Items below record the legacy plan and its period status; they are not a current V2 verification report. See [current workspace status](../STATUS.md) for verified boundaries and results.
+
 **Project**: ResponseLock Lead & Conversion Integrity Demo Workspace  
 **Scope**: Week-1 Fixed-Scope Audit Training Workspace ($350 Service Fidelity)  
 **Workspace Root**: `C:\Users\Ranji\code-base\RL-Demo`  
@@ -88,8 +90,8 @@ Wave 0 (Serial Foundation)
   - Permanent disclaimer banner indicating simulated educational usage.
   - Status badges for Normal, Mismapped, Duplicate, and Incomplete records.
   - Red "Reset CRM Store" button calling `/api/dev/reset`.
-- [x] **Test Conditions Panel**:
-  - Toggles for Ad Blocker, API 500 error, API timeout, slow network (2s), and Consent Mode.
+- [x] **Test Conditions Panel controls**:
+  - The legacy toggles record local diagnostic flags for ad blocker, API 500, API timeout, slow network, and consent scenarios. They do not inject those conditions into requests or change consent state; see [the current runbook boundary](demo-runbook.md#62-test-conditions-panel).
 
 ### 3.6 Workstream A6: Operational Documentation Suite
 - [x] `docs/demo-runbook.md`: Beginner-friendly step-by-step setup and execution guide.

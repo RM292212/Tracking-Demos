@@ -228,6 +228,17 @@ export default function EvidencePage(): React.ReactElement {
             {route?.description ??
               'Evidence artifacts, finding summaries, and verification matrix links.'}
           </p>
+          <p
+            role="note"
+            data-testid="evidence-catalog-disclaimer"
+            style={{
+              marginTop: 'var(--space-2)',
+              color: 'var(--color-warning-text)',
+              fontSize: 'var(--font-size-xs)',
+            }}
+          >
+            Scenario reference catalog: badges describe expected examples, not a live platform health check.
+          </p>
         </div>
 
         {/* Navigation Tabs */}

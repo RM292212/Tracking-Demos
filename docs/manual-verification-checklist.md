@@ -28,7 +28,7 @@ Open Chrome or Edge at `http://localhost:3000`. Open DevTools (F12) to the **Con
 | 2.1 | Navigate to `http://localhost:3000` | Page loads cleanly with navigation bar, status indicators, and scenario links. Zero console errors. | [ ] |
 | 2.2 | Inspect `window.dataLayer` in DevTools Console | Initialized array contains Consent Mode v2 default denial (`ad_storage: 'denied'`, `analytics_storage: 'denied'`, `wait_for_update: 500`). | [ ] |
 | 2.3 | Inspect floating Consent Banner | Banner is visible at bottom with "Accept All Cookies" and "Decline" buttons. | [ ] |
-| 2.4 | Click "Accept All Cookies" | Banner closes. `window.dataLayer` receives `consent: update` with all permissions `'granted'`. Timeline records `consent` event. | [ ] |
+| 2.4 | Click "Accept All Cookies" (if consent UI is rendered on this route) | Verify the actual consent command in `window.dataLayer` or Tag Assistant. The timeline and Test Conditions flags are not proof of consent state. | [ ] |
 | 2.5 | Keyboard Navigation Test | Press `Tab` continuously from top of page. Focus ring is clearly visible on every link, button, and input. No keyboard traps. | [ ] |
 | 2.6 | Responsive Viewport Check | Switch DevTools to Responsive Mode at 360px width. Ensure zero horizontal scroll and all text remains legible. | [ ] |
 | 2.7 | Color Contrast & Text Zoom | Zoom browser to 200%. Layout reflows gracefully without overlapping text. All text meets WCAG AA contrast. | [ ] |
@@ -38,7 +38,7 @@ Open Chrome or Edge at `http://localhost:3000`. Open DevTools (F12) to the **Con
 ## 3. Scenario 01: Baseline Intact Conversion Chain (`/scenario/baseline`)
 
 ### 3.1 Test Case A: Invalid Submission Rejection
-1. Reset the CRM store before testing: Click **Reset CRM Store** in `/crm` or use Test Conditions panel.
+1. If the test requires an empty CRM, preserve any records needed for review and use the explicit **Reset CRM Store** action in `/crm`. The Test Conditions panel does not reset the CRM.
 2. Navigate to `http://localhost:3000/scenario/baseline`.
 3. Leave all form fields blank.
 4. Click **Submit Request**.
@@ -48,7 +48,7 @@ Open Chrome or Edge at `http://localhost:3000`. Open DevTools (F12) to the **Con
 - [ ] **Network Egress**: Network tab confirms **0 requests** made to `/api/leads`.
 - [ ] **CRM Persistence**: Navigate to `/crm`; table confirms **0 rows**.
 - [ ] **Analytics dataLayer**: DevTools console confirms **0 `demo_lead_success` events** pushed.
-- [ ] **Timeline**: Observability panel logs `validation: Form validation failed`.
+- [ ] **Timeline (optional diagnostic)**: If the route emits a validation event, confirm its displayed content; the timeline is not a required proof for form validation.
 
 ### 3.2 Test Case B: Valid Submission Chain
 1. Fill out the form with approved fictional data:
@@ -179,13 +179,13 @@ Open Chrome or Edge at `http://localhost:3000`. Open DevTools (F12) to the **Con
 
 | Step | Action | Expected Observation | Pass / Fail |
 |---|---|---|---|
-| 11.1 | Open Observability drawer | Panel opens from side/bottom with chronological timeline. Entries have timestamp (ms), category icon, and title. | [ ] |
-| 11.2 | Expand entry payload | Clicking an entry reveals JSON payload. Emails appear as `d***@example.com`, phones as `+1-555-****`. Zero unredacted PII. | [ ] |
+| 11.1 | Open Observability drawer where available | Panel displays recorded diagnostic events. The timeline may not contain a complete form/request trace. | [ ] |
+| 11.2 | Expand entry payload where available | Confirm that supported PII fields are redacted in displayed payloads. Verify network requests in DevTools and do not treat the timeline as a substitute. | [ ] |
 | 11.3 | Click "Copy Evidence Summary" | Clipboard contains formatted markdown table of events with timestamps and sanitized categories. | [ ] |
 | 11.4 | Click "Download Sanitized Manifest" | Browser downloads `sanitized-evidence-manifest.json` containing structured event history. | [ ] |
-| 11.5 | Open Test Conditions drawer | Toggle "Simulate API 500 Error". Submit any form. Form displays server error message. Timeline records network failure. | [ ] |
-| 11.6 | Toggle "Simulate Ad Blocker" | Reload page. GTM status displays blocked warning. Tag injection is skipped. | [ ] |
-| 11.7 | Toggle "Network Throttle (2s)" | Submit form. Button stays disabled for at least 2 seconds before resolving, verifying loading state. | [ ] |
+| 11.5 | Open Test Conditions drawer | Toggle a diagnostic flag and inspect `window.__RL_TEST_CONDITIONS__`. The panel records the flag; it does not force an API response or request failure. | [ ] |
+| 11.6 | Review ad-blocker flag | Toggle the panel flag and verify it is only a local diagnostic value. To test blocking, use a real browser extension and inspect blocked requests in DevTools. | [ ] |
+| 11.7 | Review slow-network flag | Toggle the panel flag and verify it is only a local diagnostic value. It does not delay form requests. | [ ] |
 
 ---
 

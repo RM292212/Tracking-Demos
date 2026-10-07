@@ -11,7 +11,7 @@
 
 The ResponseLock Conversion-Integrity Demo Workspace is designed exclusively for **local training, educational demonstration, and testing**. It makes the entire conversion chain inspectable and intentionally defect-prone so engineers and media buyers can observe how broken attribution silently corrupts analytics and ad spend.
 
-Because this workspace simulates production-grade marketing technology (Google Tag Manager, Google Analytics 4, Google Ads conversion modeling, CRM integrations, and web forms), **strict safety boundaries are mandatory**. Violating any of these rules threatens client data integrity, incurs real advertising spend, breaches data privacy regulations, or invalidates educational findings.
+Because this workspace models parts of a marketing measurement stack using a local application and CRM simulation, **strict safety boundaries are mandatory**. The GTM container is currently empty, GA4 account access is pending, and no Google Ads conversion has been tested.
 
 ---
 
@@ -19,8 +19,8 @@ Because this workspace simulates production-grade marketing technology (Google T
 
 ### Rule 1: No Connection to Production Marketing Systems
 - **Mandate**: Under no circumstances shall this workspace connect to, authenticate with, or send events to production GTM containers, production GA4 measurement IDs, production Google Ads conversion actions, or live client CRM endpoints.
-- **Enforcement**: All configuration files (`.env.local`) strictly use dedicated non-production test containers (`GTM-KRH5W5MX`, `G-GQBPF316M0`).
-- **Audit Check**: Verified by `npm run scan:pii` and network egress monitoring.
+- **Enforcement**: The local environment has the supplied IDs `GTM-KRH5W5MX` and `G-GQBPF316M0`. The GTM container is known to be empty and service access is pending; ID presence alone does not prove a non-production destination or safe configuration.
+- **Audit Check**: Inspect destination and tag settings before any Preview or networked activity. A local PII scan does not establish network egress behavior.
 
 ### Rule 2: No Firing Real Google Ads Conversion Actions
 - **Mandate**: Google Ads conversion actions are strictly modeled conceptually. No live Google Ads Conversion IDs (`AW-XXXXXXXXX`) or conversion labels may be injected or triggered.

@@ -91,7 +91,7 @@ NEXT_PUBLIC_GTM_CONTAINER_ID=GTM-KRH5W5MX
 NEXT_PUBLIC_GA4_MEASUREMENT_ID=G-GQBPF316M0
 ```
 
-> **Note on Safety**: These are dedicated non-production test identifiers. The application operates safely even if these variables are empty or omitted (the UI will indicate that GTM/GA4 is unconfigured, while all local simulations remain 100% functional).
+> **External-service status**: These IDs are present in the local environment, but GTM/GA4 access is pending. `GTM-KRH5W5MX` is currently empty; local IDs do not establish destination safety or prove that external events are received. The application can also run without either ID for local-only use.
 
 ---
 
@@ -246,28 +246,25 @@ The application includes 10 primary routes accessible via the navigation header.
 
 ## 6. Observability Panel & Test Conditions
 
-Every scenario page features two interactive diagnostic drawers:
+Legacy scenario pages may include diagnostic drawers:
 
 ### 6.1 Observability Timeline Panel
-- Displays chronological events across 9 categories: `lifecycle`, `validation`, `network`, `analytics`, `storage`, `crm`, `attribution`, `consent`, and `defect`.
-- PII is automatically redacted before display.
+- Displays recorded events using the timeline categories `lifecycle`, `validation`, `network`, `analytics`, `storage`, `crm`, `attribution`, `consent`, and `defect`. Categories describe the event schema; not every form or request emits an event in every category.
+- PII redaction applies to supported timeline payload fields. Verify the underlying network and dataLayer evidence independently.
 - **Actions**:
   - **Copy Evidence**: Copies a sanitized markdown table of recent events to your clipboard.
   - **Download Manifest**: Downloads `sanitized-evidence-manifest.json` for inclusion in audit reports.
 
 ### 6.2 Test Conditions Panel
-Allows simulating real-world edge cases without modifying source code:
-- **Ad Blocker Simulation**: Simulates an ad blocker preventing GTM snippet execution.
-- **API 500 Error**: Forces `/api/leads` to return `500 Internal Server Error`.
-- **API Timeout**: Induces a client-side request timeout.
-- **Network Throttle (2s)**: Adds a 2-second delay to test submit button disabled states and loading spinners.
-- **Consent Mode v2 Toggle**: Allows toggling consent between granted and denied.
+This legacy panel records local diagnostic flags in `window.__RL_TEST_CONDITIONS__` and emits panel-level diagnostic events. The toggles do not inject request failures, delay API calls, block GTM, or change Google consent state. Treat the flags as labels for a manual scenario, not as proof that the named condition occurred. To test an actual HTTP failure or browser ad blocker, use an explicitly configured test server or a real browser extension and verify the result in Network tools.
+
+The controls shown in the legacy panel do not apply to the V2 lead form or its request lifecycle.
 
 ---
 
 ## 7. Resetting Data
 
-To clear all simulated CRM records and start fresh:
+To clear simulated CRM records, first preserve any records needed for review, then use the explicit reset action documented below. The Test Conditions panel does not reset or modify CRM data.
 
 ### Method 1: Via the UI
 Navigate to `/crm` and click the red **Reset CRM Store** button.
